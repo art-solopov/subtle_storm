@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "pya-tinker"
+version = "0.0.1"
+description = ""
+authors = ["Artemiy Solopov <art-solopov@yandex.ru>"]
+license = "UNLICENSED"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+python-arango = "^7.7"
+quart = "^0.19.3"
+
+
+[tool.poetry.group.dev.dependencies]
+ipython = "^8.16.1"
+python-lsp-server = "^1.8.2"
+flake8 = "^6.1.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
