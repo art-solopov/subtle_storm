@@ -20,5 +20,10 @@ async def projects_index():
     return await render_template('projects_index.html', projects=projects)
 
 
+@app.route("/projects/<key>")
+async def projects_show():
+    project_repo = ProjectsRepository(arango.db)
+
+
 if __name__ == "__main__":
     app.run(debug=True)
