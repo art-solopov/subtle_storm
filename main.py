@@ -1,24 +1,26 @@
 import logging
 
-from fastapi import FastAPI
-from fastapi.responses import PlainTextResponse
+from fastapi import FastAPI, Request
+from fastapi.templating import Jinja2Templates
 
 import db as adb
 from repo import ProjectsRepository
 
-app = FastAPI(debug=True)
 logging.basicConfig(level=logging.DEBUG)
 
+app = FastAPI(debug=True)
 db = adb.ArangoConnection().db
+templates = Jinja2Templates(directory='templates')
 
 
-@app.get('/', response_class=PlainTextResponse)
-async def root():
-    return "Hello world"
+@app.get('/')
+async def root(request: Request):
+    return templates.TemplateResponse(request=request, name='root.html')
 
 
 @app.get('/projects')
-def projects_list():
+def projects_list(request: Request):
     repo = ProjectsRepository(db)
     projects = repo.index()
-    return projects
+    return templates.TemplateResponse(request=request, name='projects_index.html',
+                                      context={'projects': projects})

@@ -3,7 +3,7 @@
 {% block main %}
     <ul>
         {% for pr in projects %}
-        <li>{{ pr._key | upper }} — {{ pr.name }}</li>
+        <li>{{ pr.arango_data.key | upper }} — {{ pr.name }}</li>
         {% endfor %}
     </ul>
 {% endblock %}
