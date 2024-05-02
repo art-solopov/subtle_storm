@@ -1,5 +1,6 @@
-from typing import Any
+from typing import Any, Dict
 from dataclasses import dataclass
+from enum import Enum
 
 from pydantic import BaseModel, Field, computed_field, model_validator
 
@@ -48,3 +49,27 @@ class ProjectsRepository(Base):
     @property
     def _collection(self):
         return self.adb.collection('projects')
+
+
+class TasksRepository(Base):
+    class SortFields(str, Enum):
+        title = 'title'
+
+    class DTO(ArangoDTO):
+        project: str
+        title: str
+        description: str | None = None
+
+    def index(self, query_params: Dict[str, Any]):
+        filters = ' AND '.join(f't.{x} == @{x}' for x in query_params.keys())
+
+        return [self.DTO(**d) for d in
+                self.adb.aql.execute(f'''
+                FOR t IN tasks
+                FILTER {filters}
+                RETURN t
+                ''', bind_vars=query_params)]
+
+    @property
+    def _collection(self):
+        return self.adb.collection('tasks')
