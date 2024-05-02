@@ -2,6 +2,16 @@
 
 {% block main %}
     <h1>{{ project.name }}</h1>
+
+    <div>
+        {# TODO: move into separate loader #}
+        <select id="projects_select" name="project" hx-get="{{ request.path }}" hx-trigger="change" hx-target="body" hx-push-url="true">
+            {% for p in all_projects %}
+                <option value="{{ p.arango_data.key }}" {% if project.arango_data.id == p.arango_data.id %}selected{% endif %}>{{ p.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
     <ul>
         {% for task in tasks %}
         <li>{{ task.title }}</li>

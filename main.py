@@ -33,6 +33,9 @@ def tasks_list(request: Request, project: str):
     projects_repo = ProjectsRepository(db)
     tasks_repo = TasksRepository(db)
     project = projects_repo.show(project.lower())
+    all_projects = projects_repo.index()
     tasks = tasks_repo.index(query_params)
-    return templates.TemplateResponse(request=request, name='tasks_index.html',
-                                      context={'tasks': tasks, 'project': project})
+    return templates.TemplateResponse(
+        request=request, name='tasks_index.html',
+        context={'tasks': tasks, 'project': project, 'all_projects': all_projects}
+        )

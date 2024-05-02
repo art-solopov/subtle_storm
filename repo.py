@@ -44,7 +44,11 @@ class ProjectsRepository(Base):
         return [self.DTO(**d) for d in self._collection.all()]
 
     def show(self, key):
-        return self._collection.get(key)
+        data = self._collection.get(key)
+        if data is None:
+            return None
+
+        return self.DTO(**data)
 
     @property
     def _collection(self):
