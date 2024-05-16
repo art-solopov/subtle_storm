@@ -55,6 +55,13 @@ class ProjectsRepository(Base):
         return self.adb.collection('projects')
 
 
+class StatusRepository(Base):
+    class DTO(ArangoDTO):
+        project: str
+        name: str
+        position: int
+
+
 class TasksRepository(Base):
     class SortFields(str, Enum):
         title = 'title'
@@ -64,14 +71,21 @@ class TasksRepository(Base):
         title: str
         description: str | None = None
 
+    class IndexDTO(DTO):
+        status: StatusRepository.DTO
+
     def index(self, query_params: Dict[str, Any]):
         filters = ' AND '.join(f't.{x} == @{x}' for x in query_params.keys())
 
-        return [self.DTO(**d) for d in
+        return [self.IndexDTO(**d) for d in
                 self.adb.aql.execute(f'''
                 FOR t IN tasks
                 FILTER {filters}
-                RETURN t
+                LET status = (
+                  FOR s IN statuses FILTER s._id == t.status LIMIT 1
+                  RETURN s
+                )
+                RETURN MERGE(t, {{status: FIRST(status)}})
                 ''', bind_vars=query_params)]
 
     @property

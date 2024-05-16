@@ -12,9 +12,18 @@
         </select>
     </div>
 
-    <ul>
-        {% for task in tasks %}
-        <li>{{ task.title }}</li>
-        {% endfor %}
-    </ul>
+    <table>
+        <thead>
+            <tr></tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ task.status.name }}</td>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.description | default('—', true) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
