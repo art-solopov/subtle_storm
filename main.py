@@ -2,6 +2,7 @@ import logging
 
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 
 import db as adb
 from repo import ProjectsRepository, TasksRepository
@@ -11,6 +12,9 @@ logging.basicConfig(level=logging.DEBUG)
 app = FastAPI(debug=True)
 db = adb.ArangoConnection().db
 templates = Jinja2Templates(directory='templates')
+
+
+app.mount("/static", StaticFiles(directory="static"))
 
 
 @app.get('/')
