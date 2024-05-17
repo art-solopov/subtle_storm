@@ -4,8 +4,8 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 
-import db as adb
-from repo import ProjectsRepository, TasksRepository
+from . import db as adb
+from .repo import ProjectsRepository, TasksRepository
 
 logging.basicConfig(level=logging.DEBUG)
 
