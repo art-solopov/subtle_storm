@@ -1,6 +1,8 @@
 import {LitElement, html, css} from 'lit';
 import {classMap} from 'lit/directives/class-map.js';
 
+import navArrowRight from './icons/nav-arrow-right.svg'
+
 export class Sidebar extends LitElement {
     static styles = css`
     :host {
@@ -9,16 +11,48 @@ export class Sidebar extends LitElement {
     }
 
     aside {
+        height: 100%;
         display: grid;
-        grid-template-columns: 0 0.5rem;
-        transition: grid-template-columns 0.6s;
+
+        --grid-size: clamp(10rem, calc(50vw - var(--hiq-max-container-width) / 2 - 2rem), 40rem);
+        grid-template-columns: var(--grid-size) 0.5rem;
+
+        translate: calc(-1 * var(--grid-size));
+
+        --transition-time: 0.6s;
+        transition: translate var(--transition-time);
+
+        background-color: var(--nav-color, white);
+        color: var(--text-color, black);
 
         .slot {
             overflow: hidden;
         }
 
+        .button-container {
+            background: gray;
+        }
+
+        .toggle-button {
+            width: 3rem;
+            aspect-ratio: 1;
+            border: 1px solid var(--nav-color, black);
+            border-radius: 50%;
+            font-size: 1.5rem;
+            translate: -1rem;
+
+            & img {
+                height: 1em;
+                transition: rotate var(--transition-time) linear;
+            }
+        }
+
         &.open {
-            grid-template-columns: clamp(10rem, calc(50vw - var(--hiq-max-container-width) / 2 - 2rem), 40rem) 0.5rem;
+            translate: 0;
+
+            .toggle-button img {
+                rotate: 180deg;
+            }
 
             .slot {
             }
@@ -40,7 +74,9 @@ export class Sidebar extends LitElement {
         <aside class=${classMap(asideClasses)}>
             <div class="slot"><slot></slot></div>
             <div class="button-container">
-                <button @click=${this._toggle}>+</button>
+                <button @click=${this._toggle} title="Toggle" class="toggle-button">
+                    <img src=${navArrowRight}>
+                </button>
             </div>
         </aside>
         `

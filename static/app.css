@@ -2,6 +2,11 @@
     --hiq-max-container-width: 50rem;
 }
 
-/* s-sidebar { */
-/*     position: fixed; */
-/* } */
+s-sidebar {
+    --nav-color: navy;
+    --text-color: white;
+
+    &, & > * {
+        color: var(--text-color);
+    }
+}
