@@ -17,6 +17,10 @@
         <s-sidebar>
             <a href="/" class="brand-link">Subtle Storm</a>
             <span>Hello world</span> <!-- TODO: add project loader -->
+
+            {% if project %}
+            <div hx-get="{{ url_for('projects_select') }}?current_project={{ project.arango_data.key }}" hx-trigger="intersect once" hx-swap="outerHTML"></div>
+            {% endif %}
         </s-sidebar>
         <main class="container">
             {% block main %}{% endblock %}

@@ -30,6 +30,16 @@ def projects_list(request: Request):
                                       context={'projects': projects})
 
 
+@app.get('/_projects-select')
+def projects_select(request: Request, current_project: str):
+    repo = ProjectsRepository(db)
+    projects = repo.index()
+    return templates.TemplateResponse(
+        request=request, name='projects_select.html',
+        context={'current_project': current_project, 'projects': projects}
+        )
+
+
 @app.get('/tasks')
 def tasks_list(request: Request, project: str):
     # TODO: query params processing in use case?

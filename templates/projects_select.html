@@ -1,0 +1,7 @@
+<div class="project-select">
+    <select id="projects_select" name="project" hx-get="{{ url_for('tasks_list') }}" hx-trigger="change" hx-target="body" hx-push-url="true">
+        {% for p in projects %}
+            <option value="{{ p.arango_data.key }}" {% if current_project == p.arango_data.key %}selected{% endif %}>{{ p.name }}</option>
+        {% endfor %}
+    </select>
+</div>

@@ -6,6 +6,10 @@ s-sidebar {
     --nav-color: navy;
     --text-color: white;
 
+    & select {
+        box-sizing: border-box;
+    }
+
     & > a, span {
         display: block;
         padding: 0.5em 1rem;
