@@ -14,7 +14,7 @@ export class Sidebar extends LitElement {
         height: 100%;
         display: grid;
 
-        --grid-size: clamp(10rem, calc(50vw - var(--hiq-max-container-width) / 2 - 2rem), 40rem);
+        --grid-size: clamp(10rem, calc(50vw - var(--hiq-max-container-width) / 2 - 2rem), 20rem);
         grid-template-columns: var(--grid-size) 0.5rem;
 
         translate: calc(-1 * var(--grid-size));
@@ -27,6 +27,10 @@ export class Sidebar extends LitElement {
 
         .slot {
             overflow: hidden;
+
+            display: flex;
+            flex-flow: column;
+            align-items: stretch;
         }
 
         .button-container {
