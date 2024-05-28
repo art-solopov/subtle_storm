@@ -178,3 +178,4 @@ pyrightconfig.json
 # Assets
 node_modules
 static/assets
+static/.vite
