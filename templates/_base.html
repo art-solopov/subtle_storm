@@ -6,21 +6,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- <link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css@8.0.1/normalize.css"> -->
         <link rel="stylesheet" type="text/css" href="https://unpkg.com/hiq@4.2.3/dist/hiq.min.css">
-        <link rel="stylesheet" type="text/css" href="/static/app.css">
+        <!-- <link rel="stylesheet" type="text/css" href="/static/app.css"> -->
 
         <!-- TODO: properly vendor -->
         <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
 
-        <script src="/static/assets/app.js"></script>
+        <!-- <script src="/static/assets/app.js"></script> -->
+        <!-- if development -->
+        <script type="module" src="http://localhost:5173/@vite/client"></script>
+        <script type="module" src="http://localhost:5173/js/main.js"></script>
     </head>
     <body>
         <s-sidebar>
             <a href="/" class="brand-link">Subtle Storm</a>
-            <span>Hello world</span> <!-- TODO: add project loader -->
+            <span>Hello world</span>
+            <div class="vue-mount" data-vue="ProjectLoader"></div>
 
-            {% if project %}
-            <div hx-get="{{ url_for('projects_select') }}?current_project={{ project.arango_data.key }}" hx-trigger="intersect once" hx-swap="outerHTML"></div>
-            {% endif %}
+            <!-- {% if project %} -->
+            <!-- <div hx-get="{{ url_for('projects_select') }}?current_project={{ project.arango_data.key }}" hx-trigger="intersect once" hx-swap="outerHTML"></div> -->
+            <!-- {% endif %} -->
         </s-sidebar>
         <main class="container">
             {% block main %}{% endblock %}

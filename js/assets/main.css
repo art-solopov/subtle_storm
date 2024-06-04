@@ -1,35 +1,31 @@
-@import './base.css';
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  font-weight: normal;
+:root {
+    --hiq-max-container-width: 50rem;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
+s-sidebar {
+    --nav-color: navy;
+    --text-color: white;
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
+    & select {
+        box-sizing: border-box;
+    }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
+    & > a, span {
+        display: block;
+        padding: 0.5em 1rem;
+        text-align: center;
+    }
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+    .brand-link {
+        font-size: 150%;
+        color: var(--text-color);
+        font-variant: small-caps;
+        font-weight: bold;
+
+        &:hover,
+        &:focus {
+            color: var(--text-color);
+            text-decoration: underline;
+        }
+    }
 }

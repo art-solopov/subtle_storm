@@ -8,23 +8,9 @@ import arango
 
 
 class ArangoDTO(BaseModel):
-    @dataclass
-    class ArangoData:
-        key: str
-        id: str
-        rev: str
-
-    arango_data: ArangoData
-
-    @model_validator(mode='before')
-    @classmethod
-    def set_arango_data(cls, data: Any):
-        if isinstance(data, dict):
-            assert '_key' in data
-            assert '_id' in data
-            assert '_rev' in data
-            data['arango_data'] = cls.ArangoData(key=data['_key'], id=data['_id'], rev=data['_rev'])
-        return data
+    key: str = Field(alias='_key')
+    id: str = Field(alias='_id')
+    rev: str = Field(alias='_rev')
 
 
 class Base:

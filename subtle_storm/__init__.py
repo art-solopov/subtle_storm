@@ -22,12 +22,10 @@ async def root(request: Request):
     return templates.TemplateResponse(request=request, name='root.html')
 
 
-@app.get('/projects')
+@app.get('/api/projects')
 def projects_list(request: Request):
     repo = ProjectsRepository(db)
-    projects = repo.index()
-    return templates.TemplateResponse(request=request, name='projects_index.html',
-                                      context={'projects': projects})
+    return repo.index()
 
 
 @app.get('/_projects-select')
