@@ -2,12 +2,14 @@ import {defineCustomElement, createApp} from 'vue'
 
 import Sidebar from './components/Sidebar.ce.vue'
 import ProjectLoader from './components/ProjectLoader.vue'
+import TasksTable from './components/TasksTable.vue'
+import Home from './components/Home.vue'
 
 import './assets/main.css'
 
 customElements.define('s-sidebar', defineCustomElement(Sidebar))
 
-const components = { ProjectLoader }
+const components = { ProjectLoader, Home, TasksTable }
 
 function mountComponents() {
     for (let el of document.querySelectorAll('.vue-mount:empty')) {

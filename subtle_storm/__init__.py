@@ -1,8 +1,9 @@
 import logging
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
+from typing import Annotated
 
 from . import db as adb
 from .repo import ProjectsRepository, TasksRepository
@@ -17,9 +18,30 @@ templates = Jinja2Templates(directory='templates')
 app.mount("/static", StaticFiles(directory="static"))
 
 
+def _render_base_template(request: Request, component: str, current_project: str | None):
+    return templates.TemplateResponse(
+        request=request,
+        name='root.html',
+        context={'current_project': current_project, 'component': component}
+        )
+
+
+def load_project(project: str):
+    projects_repo = ProjectsRepository(db)
+    return projects_repo.show(project.lower())
+
+
+ProjectDep = Annotated[ProjectsRepository.DTO, Depends(load_project)]
+
+
 @app.get('/')
 async def root(request: Request):
-    return templates.TemplateResponse(request=request, name='root.html')
+    return _render_base_template(request, 'Home', None)
+
+
+@app.get('/tasks')
+async def tasks_view(request: Request, project: str):
+    return _render_base_template(request, 'TasksTable', project)
 
 
 @app.get('/api/projects')
@@ -28,26 +50,9 @@ def projects_list(request: Request):
     return repo.index()
 
 
-@app.get('/_projects-select')
-def projects_select(request: Request, current_project: str):
-    repo = ProjectsRepository(db)
-    projects = repo.index()
-    return templates.TemplateResponse(
-        request=request, name='projects_select.html',
-        context={'current_project': current_project, 'projects': projects}
-        )
-
-
-@app.get('/tasks')
+@app.get('/api/tasks')
 def tasks_list(request: Request, project: str):
     # TODO: query params processing in use case?
     query_params = dict(project=f'projects/{project.lower()}')
-    projects_repo = ProjectsRepository(db)
     tasks_repo = TasksRepository(db)
-    project = projects_repo.show(project.lower())
-    all_projects = projects_repo.index()
-    tasks = tasks_repo.index(query_params)
-    return templates.TemplateResponse(
-        request=request, name='tasks_index.html',
-        context={'tasks': tasks, 'project': project, 'all_projects': all_projects}
-        )
+    return tasks_repo.index(query_params)
