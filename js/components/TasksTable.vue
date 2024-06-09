@@ -10,7 +10,6 @@
 
 
     watch(currentProject, async (project, prevProject) => {
-        console.log(project, prevProject) 
         tasks.value = await index(project)
     }, { immediate: true })
 

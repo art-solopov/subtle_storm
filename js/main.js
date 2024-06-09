@@ -19,7 +19,13 @@ function mountComponents() {
         let vue = components[el.dataset.vue]
         if (!vue) continue
 
-        createApp(vue).mount(el)
+
+        const app = createApp(vue)
+        app.mount(el)
+        el.addEventListener('htmx:beforeSwap', () => {
+            app.unmount()
+        })
+
         htmx.process(el)
     }
 }
