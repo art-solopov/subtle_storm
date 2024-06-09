@@ -22,6 +22,6 @@
             <span>Hello world</span>
             <div class="vue-mount" data-vue="ProjectLoader"></div>
         </s-sidebar>
-        <main class="container vue-mount" id="top_content" data-current-project="{{ current_project }}" data-vue="{{ component }}"></main>
+        <main class="container vue-mount" id="top_content" data-current-project="{{ current_project | lower }}" data-vue="{{ component }}"></main>
     </body>
 </html>

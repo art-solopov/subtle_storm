@@ -1,4 +1,7 @@
 import {defineCustomElement, createApp} from 'vue'
+import { logger } from '@nanostores/logger'
+
+import { $currentProject, updater as currentProject_updater } from './stores/current_project'
 
 import Sidebar from './components/Sidebar.ce.vue'
 import ProjectLoader from './components/ProjectLoader.vue'
@@ -15,9 +18,20 @@ function mountComponents() {
     for (let el of document.querySelectorAll('.vue-mount:empty')) {
         let vue = components[el.dataset.vue]
         if (!vue) continue
+
         createApp(vue).mount(el)
+        htmx.process(el)
     }
 }
 
-document.addEventListener('DOMContentLoaded', mountComponents)
-document.addEventListener('htmx:afterSwap', mountComponents)
+function updater() {
+    currentProject_updater()
+    mountComponents()
+}
+
+document.addEventListener('DOMContentLoaded', updater)
+document.addEventListener('htmx:afterSettle', updater)
+
+const destroy = logger({
+    currentProject: $currentProject
+})
