@@ -1,8 +1,7 @@
 from typing import Any, Dict
-from dataclasses import dataclass
 from enum import Enum
 
-from pydantic import BaseModel, Field, computed_field, model_validator
+from pydantic import BaseModel, Field, computed_field
 
 import arango
 
@@ -36,6 +35,15 @@ class ProjectsRepository(Base):
 
         return self.DTO(**data)
 
+    def increase_task_counter(self, key):
+        aql = '''
+        LET p = FIRST(FOR p IN projects FILTER p._key == @key RETURN p)
+        UPDATE p WITH {_taskCount: p._taskCount + 1} IN projects
+        RETURN NEW._taskCount
+        '''
+        data = self.adb.aql.execute(aql, bind_vars={'key': key})
+        return next(data)
+
     @property
     def _collection(self):
         return self.adb.collection('projects')
@@ -54,6 +62,7 @@ class TasksRepository(Base):
 
     class DTO(ArangoDTO):
         project: str
+        number: int
         title: str
         description: str | None = None
 
@@ -67,12 +76,15 @@ class TasksRepository(Base):
                 self.adb.aql.execute(f'''
                 FOR t IN tasks
                 FILTER {filters}
-                LET status = (
-                  FOR s IN statuses FILTER s._id == t.status LIMIT 1
+                LET status = FIRST(
+                  FOR s IN statuses FILTER s._key == t.status LIMIT 1
                   RETURN s
                 )
-                RETURN MERGE(t, {{status: FIRST(status)}})
+                RETURN MERGE(t, {{status}})
                 ''', bind_vars=query_params)]
+
+    def insert(self, data):
+        return self._collection.insert(data)
 
     @property
     def _collection(self):

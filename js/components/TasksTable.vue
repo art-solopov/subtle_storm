@@ -9,8 +9,8 @@
     const tasks = useStore($currentProjectTasks)
 
     function formatTaskNumber(task) {
-        let project = task.project.split('/').at(-1).toUpperCase()
-        return `${project}-${task._key}`
+        let project = task.project.toUpperCase()
+        return `${project}-${task.number}`
     }
 </script>
 
