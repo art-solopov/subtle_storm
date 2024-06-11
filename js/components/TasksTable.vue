@@ -2,16 +2,11 @@
     import { ref, watch } from 'vue'
     import { useStore } from '@nanostores/vue'
 
-    import { $currentProject } from '../stores/current_project'
+    import { $currentProject, $currentProjectTasks } from '../stores/current_project'
     import { index } from '../repo/tasks'
 
     const currentProject = useStore($currentProject)
-    const tasks = ref([])
-
-
-    watch(currentProject, async (project, prevProject) => {
-        tasks.value = await index(project)
-    }, { immediate: true })
+    const tasks = useStore($currentProjectTasks)
 
     function formatTaskNumber(task) {
         let project = task.project.split('/').at(-1).toUpperCase()

@@ -2,17 +2,13 @@
     import { ref, computed, onMounted } from 'vue'
     import { useStore } from '@nanostores/vue'
 
-    import { index } from '../repo/projects'
+    import { $projects } from '../stores/projects'
     import { $currentProject } from '../stores/current_project'
 
-    const projects = ref([])
+    const projects = useStore($projects)
     const currentProject = useStore($currentProject)
     
     const isShown = computed(() => !!currentProject.value);
-
-    onMounted(async () => {
-        projects.value = await index()
-    })
 </script>
 
 <template>
