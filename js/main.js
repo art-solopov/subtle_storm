@@ -2,7 +2,7 @@ import {defineCustomElement, createApp} from 'vue'
 import { logger } from '@nanostores/logger'
 
 import { $projects } from './stores/projects'
-import { $currentProject, $currentProjectTasks, updater as currentProject_updater } from './stores/current_project'
+import { updater as currentProject_updater } from './stores/current_project'
 
 import Sidebar from './components/Sidebar.ce.vue'
 import ProjectLoader from './components/ProjectLoader.vue'
@@ -38,9 +38,3 @@ function updater() {
 
 document.addEventListener('DOMContentLoaded', updater)
 document.addEventListener('htmx:afterSettle', updater)
-
-const destroy = logger({
-    projects: $projects,
-    currentProject: $currentProject,
-    currentProjectTasks: $currentProjectTasks
-})
