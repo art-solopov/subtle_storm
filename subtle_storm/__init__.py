@@ -48,9 +48,15 @@ async def tasks_view(request: Request, project: str):
 
 
 @app.get('/api/projects')
-def projects_list(request: Request):
+def projects_list():
     repo = ProjectsRepository(db)
     return repo.index()
+
+
+@app.get('/api/projects/{key}')
+def project_show(key: str):
+    repo = ProjectsRepository(db)
+    return repo.show(key.lower())
 
 
 @app.get('/api/tasks')
