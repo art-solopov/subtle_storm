@@ -12,6 +12,17 @@
     const taskEditDialog = ref()
     const showTaskForm = ref(false)
 
+    const statusMap = computed(() => {
+        let m = new Map()
+        if(currentProject.value) {
+            for (let st of currentProject.value.statuses) {
+                m.set(st.name, st)
+            }
+        }
+        
+        return m
+    })
+
     async function reloadTasks(project) {
         if(project) { tasks.value = await index(project._key) }
         else { tasks.value = [] }
@@ -20,8 +31,13 @@
     watch(currentProject, async project => reloadTasks(project), { immediate: true })
 
     watch(showTaskForm, (stf) => { 
-        if(stf) taskEditDialog.value.showModal()
+        if(stf) { taskEditDialog.value.showModal() }
+        else { taskEditDialog.value.close() }
     })
+
+    function taskStatus(task) {
+        return statusMap.get(task.status)
+    }
 
     function formatTaskNumber(task) {
         let project = task.project.toUpperCase()
@@ -49,7 +65,7 @@
         </thead>
         <tbody>
             <tr v-for="task in tasks">
-                <td>{{ task.status.name }}</td>
+                <td>{{ task.status }}</td>
                 <td>{{ formatTaskNumber(task) }}</td>
                 <td>{{ task.title }}</td>
             </tr>
@@ -57,6 +73,6 @@
     </table>
 
     <dialog ref="taskEditDialog">
-        <TaskForm v-model="taskForEdit" v-if="showTaskForm" />
+        <TaskForm v-model="taskForEdit" v-if="taskForEdit" />
     </dialog>
 </template>

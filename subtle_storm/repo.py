@@ -24,35 +24,34 @@ class Base:
 
 
 class ProjectsRepository(Base):
-    class DTO(ArangoDTO):
+    class IndexDTO(ArangoDTO):
         name: str
 
-        @property
-        def code(self):
-            return self.arango_data.key
+    class StatusCategory(Enum):
+        NEW = 'new'
+        IN_PROGRESS = 'in_progress'
+        DONE = 'done'
 
-    class ProjectDataDTO(DTO):
-        statuses: List['StatusRepository.DTO']
+    class StatusDTO(BaseModel):
+        name: str
+        category: 'ProjectsRepository.StatusCategory'
+
+    class DTO(ArangoDTO):
+        name: str
+        statuses: List['ProjectsRepository.StatusDTO']
 
     collection_name = 'projects'
 
     def index(self):
-        return [self.DTO(**d) for d in self._collection.all()]
-
-    def show(self, key):
         aql = '''
         FOR p IN projects
-        FILTER p._key == @key
-        LIMIT 1
-        LET statuses = (FOR s IN statuses FILTER s.project == p._key SORT s.position RETURN s)
-        RETURN MERGE(p, {statuses})
+        RETURN KEEP(p, '_id', '_key', '_rev', 'name')
         '''
+        return [self.IndexDTO(**d) for d in self.adb.aql.execute(aql)]
 
-        cursor = self.adb.aql.execute(aql, bind_vars={'key': key})
-        try:
-            return self.ProjectDataDTO(**next(cursor))
-        except StopIteration:
-            return None
+    def show(self, key):
+        doc = self._collection.get(key)
+        return self.DTO(**doc) if doc else None
 
     def increase_task_counter(self, key):
         aql = '''
@@ -84,7 +83,7 @@ class TasksRepository(Base):
         description: str | None = None
 
     class IndexDTO(DTO):
-        status: StatusRepository.DTO
+        status: str
 
     collection_name = 'tasks'
 
@@ -95,11 +94,7 @@ class TasksRepository(Base):
                 self.adb.aql.execute(f'''
                 FOR t IN tasks
                 FILTER {filters}
-                LET status = FIRST(
-                  FOR s IN statuses FILTER s._key == t.status LIMIT 1
-                  RETURN s
-                )
-                RETURN MERGE(t, {{status}})
+                RETURN t
                 ''', bind_vars=query_params)]
 
     def insert(self, data):

@@ -1,5 +1,10 @@
 <script setup>
     import { ref } from 'vue'
+    import { useStore } from '@nanostores/vue'
+
+    import { $currentProject } from '../stores/current_project'
+
+    const currentProject = useStore($currentProject)
 
     const model = defineModel()
 </script>
