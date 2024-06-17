@@ -5,6 +5,7 @@
     import { $currentProject } from '../stores/current_project'
     import { index } from '../repo/tasks'
     import TaskForm from './TaskForm.vue'
+    import Badge from './Badge.vue'
 
     const currentProject = useStore($currentProject)
     const tasks = ref([])
@@ -36,7 +37,7 @@
     })
 
     function taskStatus(task) {
-        return statusMap.get(task.status)
+        return statusMap.value.get(task.status)
     }
 
     function formatTaskNumber(task) {
@@ -64,8 +65,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="task in tasks">
-                <td>{{ task.status }}</td>
+            <tr v-for="task in tasks" :key="task._key">
+                <td>
+                    <Badge area="project" :category="taskStatus(task).category">
+                        {{ task.status }}
+                    </Badge>
+                </td>
                 <td>{{ formatTaskNumber(task) }}</td>
                 <td>{{ task.title }}</td>
             </tr>
