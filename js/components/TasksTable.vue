@@ -13,7 +13,8 @@
     const showTaskForm = ref(false)
 
     async function reloadTasks(project) {
-        tasks.value = await index(project)
+        if(project) { tasks.value = await index(project._key) }
+        else { tasks.value = [] }
     }
 
     watch(currentProject, async project => reloadTasks(project), { immediate: true })

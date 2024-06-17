@@ -1,13 +1,12 @@
 import {defineCustomElement, createApp} from 'vue'
 import { logger } from '@nanostores/logger'
 
-import { $projects } from './stores/projects'
-import { updater as currentProject_updater } from './stores/current_project'
-
 import Sidebar from './components/Sidebar.ce.vue'
 import ProjectLoader from './components/ProjectLoader.vue'
 import TasksTable from './components/TasksTable.vue'
 import Home from './components/Home.vue'
+
+import * as currentProjectStore from './stores/current_project'
 
 import './assets/main.css'
 
@@ -31,10 +30,10 @@ function mountComponents() {
     }
 }
 
-function updater() {
-    currentProject_updater()
-    mountComponents()
-}
+const _destroy = logger({
+    currentProjectKey: currentProjectStore.$currentProjectKey,
+    currentProject: currentProjectStore.$currentProject
+})
 
-document.addEventListener('DOMContentLoaded', updater)
-document.addEventListener('htmx:afterSettle', updater)
+document.addEventListener('DOMContentLoaded', mountComponents)
+document.addEventListener('htmx:afterSettle', mountComponents)
