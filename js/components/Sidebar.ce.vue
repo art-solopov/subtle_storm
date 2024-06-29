@@ -11,25 +11,29 @@
 </script>
 
 <template>
-    <aside :class="{ open: isOpen }">
+    <nav class="drawer" :class="{ open: isOpen }">
         <div class="slot">
             <slot></slot>
         </div>
+        <!-- 
         <div class="button-container">
             <button @click=toggle title="Toggle" class="toggle-button">
                 <img :src=navArrowRight>
             </button>
         </div>
-    </aside>
+        -->
+    </nav>
 </template>
 
 <style scoped>
+
 aside {
     position: fixed;
     height: 100vh;
     display: grid;
 
-    --grid-size: clamp(10rem, calc(50vw - var(--hiq-max-container-width) / 2 - 2rem), 20rem);
+    --_container-width: 50rem; 
+    --grid-size: clamp(10rem, calc(50vw - var(--_container-width) / 2 - 2rem), 20rem);
     grid-template-columns: var(--grid-size) 0.5rem;
 
     translate: calc(-1 * var(--grid-size));
@@ -39,6 +43,8 @@ aside {
 
     background-color: var(--nav-color, white);
     color: var(--text-color, black);
+
+    z-index: 1;
 
     .slot {
         overflow: hidden;

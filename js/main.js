@@ -37,3 +37,6 @@ const _destroy = logger({
 
 document.addEventListener('DOMContentLoaded', mountComponents)
 document.addEventListener('htmx:afterSettle', mountComponents)
+
+// Beer.css theme
+ui("theme", "#DC2EFF")

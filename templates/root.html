@@ -4,12 +4,14 @@
         <title>Subtle Storm</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- <link rel="stylesheet" type="text/css" href="https://unpkg.com/normalize.css@8.0.1/normalize.css"> -->
-        <link rel="stylesheet" type="text/css" href="https://unpkg.com/hiq@4.2.3/dist/hiq.min.css">
-        <!-- <link rel="stylesheet" type="text/css" href="/static/app.css"> -->
 
         <!-- TODO: properly vendor -->
         <script src="https://unpkg.com/htmx.org@1.9.12" integrity="sha384-ujb1lZYygJmzgSwoxRggbCHcjc0rB2XoQrxeTUQyRjrOnlCoYta87iKBWq3EsdM2" crossorigin="anonymous"></script>
+
+        <link href="https://cdn.jsdelivr.net/npm/beercss@3.6.3/dist/cdn/beer.min.css" rel="stylesheet" />
+
+        <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@3.6.3/dist/cdn/beer.min.js"></script>
+        <script type="module" src="https://cdn.jsdelivr.net/npm/material-dynamic-colors@1.1.2/dist/cdn/material-dynamic-colors.min.js"></script>
 
         <!-- <script src="/static/assets/app.js"></script> -->
         <!-- if development -->
@@ -17,11 +19,20 @@
         <script type="module" src="http://localhost:5173/js/main.js"></script>
     </head>
     <body>
-        <s-sidebar id="top_sidebar">
-            <a href="/" class="brand-link">Subtle Storm</a>
-            <span>Hello world</span>
+        <!-- TODO: restore the sidebar maybe -->
+        <!-- <s-sidebar id="top_sidebar"> -->
+        <!--     <a href="/" class="brand-link">Subtle Storm</a> -->
+        <!--     <span>Hello world</span> -->
+        <!--     <div class="vue-mount" data-vue="ProjectLoader"></div> -->
+        <!-- </s-sidebar> -->
+        <nav class="left drawer">
+            <header>
+                <nav>
+                    <a href="/" class="brand-link"><h6>Subtle Storm</h6></a>
+                </nav>
+            </header>
             <div class="vue-mount" data-vue="ProjectLoader"></div>
-        </s-sidebar>
-        <main class="container vue-mount" id="top_content" data-current-project="{{ current_project | lower if current_project }}" data-vue="{{ component }}"></main>
+        </nav>
+        <main class="responsive vue-mount" id="top_content" data-current-project="{{ current_project | lower if current_project }}" data-vue="{{ component }}"></main>
     </body>
 </html>
