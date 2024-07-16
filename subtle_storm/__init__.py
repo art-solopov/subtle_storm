@@ -1,10 +1,11 @@
 import logging
+from typing import Annotated
 
 from fastapi import FastAPI, Request, Response, Depends
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from starlette.status import HTTP_204_NO_CONTENT
-from typing import Annotated
+from anyio.to_thread import run_sync
 
 from . import db as adb
 from .repo import ProjectsRepository, TasksRepository
@@ -48,22 +49,22 @@ async def tasks_view(request: Request, project: str):
 
 
 @app.get('/api/projects')
-def projects_list():
+async def projects_list():
     repo = ProjectsRepository(db)
-    return repo.index()
+    return await run_sync(repo.index)
 
 
 @app.get('/api/projects/{key}')
-def project_show(key: str):
+async def project_show(key: str):
     repo = ProjectsRepository(db)
-    return repo.show(key.lower())
+    return await run_sync(repo.show, key.lower())
 
 
 @app.get('/api/tasks')
-def tasks_list(project: str):
+async def tasks_list(project: str):
     query_params = dict(project=project.lower())
     tasks_repo = TasksRepository(db)
-    return tasks_repo.index(query_params)
+    return await run_sync(tasks_repo.index, query_params)
 
 
 @app.post('/api/tasks', response_class=Response, status_code=HTTP_204_NO_CONTENT)
