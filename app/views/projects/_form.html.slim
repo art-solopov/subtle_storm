@@ -1,0 +1,13 @@
+= form_with model: @project do |form|
+  .field
+    = form.label :code
+    = form.text_field :code
+  .field
+    = form.label :name
+    = form.text_field :name
+  .field
+    = form.label :description
+    = form.rich_textarea :description
+  .submit
+    = form.submit 'Submit'
+
