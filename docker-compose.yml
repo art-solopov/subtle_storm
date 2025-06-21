@@ -1,0 +1,12 @@
+services:
+  db:
+    image: 'mariadb:11.8'
+    ports:
+      - '3306:3306'
+    environment:
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 1
+    volumes:
+      - mariadb:/var/lib/mysql
+
+volumes:
+  mariadb:
