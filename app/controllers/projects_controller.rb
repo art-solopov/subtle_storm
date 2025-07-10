@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProjectsController < ApplicationController
   before_action :fetch_project!, only: %w[show edit update destroy]
 
@@ -5,8 +7,7 @@ class ProjectsController < ApplicationController
     @projects = Project.all
   end
 
-  def show
-  end
+  def show; end
 
   def new
     @project = Project.new
@@ -21,8 +22,7 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def edit
-  end
+  def edit; end
 
   def update
     if @project.update(project_params)
@@ -32,8 +32,7 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def destroy
-  end
+  def destroy; end
 
   private
 
