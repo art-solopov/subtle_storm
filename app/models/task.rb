@@ -19,7 +19,7 @@ class Task < ApplicationRecord
   end
 
   def self.find_by_full_number_or_id!(number_or_id)
-    return find!(number_or_id) if number_or_id.is_a?(Numeric) || number_or_id =~ /\A\d+\z/
+    return find(number_or_id) if number_or_id.is_a?(Numeric) || number_or_id =~ /\A\d+\z/
 
     project_code, number = number_or_id.split('-')
     project = Project.find_by!(code: project_code.downcase)

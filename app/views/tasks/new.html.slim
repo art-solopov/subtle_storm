@@ -1,0 +1,14 @@
+h1 New task
+
+= form_with model: @form do |form|
+  .field
+    = form.label :project_id
+    = form.select :project_id, Project.order(:name).map { |p| [p.name, p.id] }
+  .field
+    = form.label :title
+    = form.text_field :title
+  .field
+    = form.label :description
+    = form.rich_textarea :description
+  .submit
+    = form.submit 'Create task'
