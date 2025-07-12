@@ -17,7 +17,9 @@ AllCops:
 
 Style/StringLiterals:
   Exclude:
-    - Gemfile # Mostly because of auto-generated files
+    # Mostly because of auto-generated files
+    - Gemfile 
+    - config/application.rb
 
 Bundler/OrderedGems:
   Enabled: false
@@ -27,6 +29,10 @@ Style/Documentation:
 
 Rails/ActionOrder:
   Enabled: false
+
+Rails/DynamicFindBy:
+  AllowedMethods:
+    - find_by_full_number_or_id!
 
 Metrics/AbcSize:
   Exclude:

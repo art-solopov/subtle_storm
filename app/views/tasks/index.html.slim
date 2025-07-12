@@ -1,0 +1,14 @@
+.row
+  = link_to 'New', new_task_path(project: @project&.code)
+
+- if @tasks.exists?
+  table
+    thead
+    tbody
+      - @tasks.each do |task|
+        - cache task do
+          tr
+            td= link_to task.full_number, task_path(task)
+            td= task.title
+- else
+  p No tasks

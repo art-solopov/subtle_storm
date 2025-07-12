@@ -1,3 +1,7 @@
+.row
+  = link_to 'New', new_project_path
+
 ul
   - @projects.each do |project|
-    li= link_to project.name, project
+    li
+      = link_to project.name, project
