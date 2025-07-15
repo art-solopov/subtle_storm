@@ -4,3 +4,7 @@ import "controllers"
 
 import "trix"
 import "@rails/actiontext"
+
+import {ProjectsSelector} from 'elements/project_selector'
+
+customElements.define('projects-selector', ProjectsSelector)
