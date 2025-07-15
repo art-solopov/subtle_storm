@@ -10,5 +10,7 @@
           tr
             td= link_to task.full_number, task_path(task)
             td= task.title
+            td
+              = link_to 'Edit', edit_task_path(task)
 - else
   p No tasks

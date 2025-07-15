@@ -5,3 +5,4 @@ section= @project.description
 section
   ul.links
     li= link_to 'Edit', edit_project_path(@project)
+    li= link_to 'Tasks', tasks_path(project: @project)

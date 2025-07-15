@@ -3,3 +3,7 @@ div
 h1= @task.title
 
 section= @task.description
+
+section
+  ul.links
+    li= link_to 'Edit', edit_task_path(@task)
