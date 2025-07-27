@@ -4,3 +4,7 @@ import "controllers"
 
 import "trix"
 import "@rails/actiontext"
+
+import {SiteSidebar} from 'elements/site_sidebar'
+
+customElements.define('site-sidebar', SiteSidebar)

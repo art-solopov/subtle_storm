@@ -24,10 +24,10 @@
   </head>
 
   <body>
-      <aside>
+      <site-sidebar id="global_sidebar" data-turbo-permanent>
           <%= render partial: 'projects_selector' %>
-      </aside>
-      <main>
+      </site-sidebar>
+      <main class="container">
           <%= yield %>
       </main>
   </body>
