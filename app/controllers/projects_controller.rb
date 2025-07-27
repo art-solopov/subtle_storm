@@ -38,6 +38,7 @@ class ProjectsController < ApplicationController
 
   def fetch_project!
     @project = Project.find_by!(code: params[:id])
+    self.current_project = @project
   end
 
   def project_params

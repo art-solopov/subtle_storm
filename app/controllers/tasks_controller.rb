@@ -4,9 +4,9 @@ class TasksController < ApplicationController
   before_action :fetch_task, only: %w[show edit update delete]
 
   def index
-    @project = fetch_project
-    @tasks = if @project
-               @project.tasks
+    self.current_project = fetch_project
+    @tasks = if current_project
+               current_project.tasks
              else
                Task.all
              end
@@ -58,5 +58,6 @@ class TasksController < ApplicationController
 
   def fetch_task
     @task = Task.includes(:project).find_by_full_number_or_id!(params[:id])
+    self.current_project = @task.project
   end
 end

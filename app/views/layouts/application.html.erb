@@ -23,6 +23,11 @@
   </head>
 
   <body>
-    <%= yield %>
+      <aside>
+          <%= render partial: 'projects_selector' %>
+      </aside>
+      <main>
+          <%= yield %>
+      </main>
   </body>
 </html>

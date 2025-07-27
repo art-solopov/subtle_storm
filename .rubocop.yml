@@ -20,6 +20,7 @@ Style/StringLiterals:
     # Mostly because of auto-generated files
     - Gemfile 
     - config/application.rb
+    - config/importmap.rb
 
 Bundler/OrderedGems:
   Enabled: false
