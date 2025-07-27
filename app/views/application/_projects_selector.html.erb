@@ -1,7 +1,9 @@
 <% if current_project %>
-    <projects-selector>
-        <% all_projects.each do |project| %>
-            <%= tag.option(project.name, href: project_path(project), selected: current_project == project) %>
-        <% end %>
-    </projects-selector>
+    <section data-controller="projects-selector">
+        <select data-action="projects-selector#changeProject">
+            <% all_projects.each do |project| %>
+                <%= tag.option(project.name, value: project_path(project), selected: current_project == project) %>
+            <% end %>
+        </select>
+    </section>
 <% end %>
