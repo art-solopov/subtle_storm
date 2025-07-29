@@ -9,6 +9,11 @@
  * Consider organizing styles into separate files for maintainability.
  */
 
+body {
+    display: flex;
+    flex-flow: row nowrap;
+}
+
 site-sidebar {
     --background: var(--pico-primary);
 }

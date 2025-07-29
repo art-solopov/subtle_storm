@@ -1,9 +1,13 @@
 import {html, css, LitElement, classMap} from 'lit'
 
+const openIcon = RAILS_ASSET_URL('/mingcute/hamburger_line.svg')
+const closeIcon = RAILS_ASSET_URL('/mingcute/close_fill.svg')
+
 export class SiteSidebar extends LitElement {
     static styles = css`
     :host {
         --padding: 0.25rem;
+        flex-basis: 2rem;
     }
 
     aside {
@@ -45,9 +49,10 @@ export class SiteSidebar extends LitElement {
         vertical-align: middle;
 
         border-radius: 50%;
+        box-sizing: border-box;
 
-        position: relative;
-        left: 100%;
+        position: absolute;
+        left: calc(100% + 2px);
     }
     `
 
@@ -66,11 +71,9 @@ export class SiteSidebar extends LitElement {
         }
 
         return html`<aside class="${classMap(classes)}">
-            <div>
-                <button class="toggle-button" @click="${this._toggleOpen}">
-                    ${this.open ? "⯇" : "⯈"}
-                </button>
-            </div>
+            <button class="toggle-button" @click="${this._toggleOpen}">
+                <img src="${this.open ? closeIcon : openIcon}">
+            </button>
             <div class="padding">
                 <slot></slot>
             </div>
