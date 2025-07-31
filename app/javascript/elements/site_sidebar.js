@@ -18,6 +18,7 @@ export class SiteSidebar extends LitElement {
         height: 100%;
         width: min(15em, 30%);
         background: var(--background);
+        color: var(--color);
 
         transform: translateX(-100%);
         transition: transform 0.2s ease;
