@@ -55,6 +55,20 @@ export class SiteSidebar extends LitElement {
         position: absolute;
         left: calc(100% + 2px);
     }
+
+    .bg {
+        transition: opacity 0.2s ease;
+        transition-behavior: allow-discrete;
+        background: black;
+        opacity: 0.6;
+
+        position: fixed;
+        inset: 0;
+
+        @starting-style {
+            opacity: 0;
+        }
+    }
     `
 
     static properties = {
@@ -71,14 +85,23 @@ export class SiteSidebar extends LitElement {
             open: this.open
         }
 
-        return html`<aside class="${classMap(classes)}">
+        return html`
+        <aside class="${classMap(classes)}">
             <button class="toggle-button" @click="${this._toggleOpen}">
                 <img src="${this.open ? closeIcon : openIcon}">
             </button>
             <div class="padding">
                 <slot></slot>
             </div>
-            </aside>`
+        </aside>
+        ${this._bg()}
+        `
+    }
+
+    _bg() {
+        if(!this.open) return null
+
+        return html`<div class="bg" @click="${this._toggleOpen}"></div>`
     }
 
     _toggleOpen() {
