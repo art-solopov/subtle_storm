@@ -7,7 +7,9 @@ export class SiteSidebar extends LitElement {
     static styles = css`
     :host {
         --padding: 0.25rem;
-        flex-basis: 2rem;
+        --_button-size: var(--button-size, 2rem);
+        --_button-offset: var(--button-offset, 2px);
+        flex-basis: calc(var(--_button-size) + var(--_button-offset));
     }
 
     aside {
@@ -19,11 +21,11 @@ export class SiteSidebar extends LitElement {
         width: min(15em, 30%);
         background: var(--background);
         color: var(--color);
+        box-shadow: calc(var(--_button-size) / 2 + var(--_button-offset)) 0 var(--background);
 
         transform: translateX(-100%);
         transition: transform 0.2s ease;
 
-        border-right: 2px solid gray;
         box-sizing: border-box;
         padding-block: var(--padding);
 
@@ -43,8 +45,8 @@ export class SiteSidebar extends LitElement {
         display: inline-block;
 
         font-size: 1.5rem;
-        height: 2rem;
-        width: 2rem;
+        height: var(--_button-size);
+        width: var(--_button-size);
         padding: 0;
         text-align: center;
         vertical-align: middle;
@@ -53,7 +55,7 @@ export class SiteSidebar extends LitElement {
         box-sizing: border-box;
 
         position: absolute;
-        left: calc(100% + 2px);
+        left: calc(100% + var(--_button-offset));
     }
 
     .bg {
