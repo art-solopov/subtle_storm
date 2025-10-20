@@ -18,15 +18,18 @@
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag 'pico.jade.min.css', "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-      <aside>
+      <site-sidebar id="global_sidebar">
+          <h1>Subtle Storm</h1>
+
           <%= render partial: 'projects_selector' %>
-      </aside>
-      <main>
+      </site-sidebar>
+      <main class="container">
           <%= yield %>
       </main>
   </body>

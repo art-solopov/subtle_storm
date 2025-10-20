@@ -1,5 +1,5 @@
 .row
-  = link_to 'New', new_task_path(project: @project&.code)
+  = link_to 'New', new_task_path(project: current_project&.code)
 
 - if @tasks.exists?
   table
