@@ -22,3 +22,14 @@ site-sidebar {
         color: var(--color);
     }
 }
+
+.links, .buttons {
+    display: flex;
+    flex-flow: row wrap;
+    gap: 1em;
+    padding: 0;
+
+    li {
+        list-style: none;
+    }
+}
