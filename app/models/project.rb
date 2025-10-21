@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 class Project < ApplicationRecord
-  enum :status, %i[preparing ready archived].index_by(&:itself), default: :preparing
+  enum :status, %w[preparing ready archived].index_by(&:itself), default: :preparing
 
   validates :name, :code, presence: true
   validates :code, exclusion: { in: %w[new] }, uniqueness: true, format: { with: /\A[a-z]{2,}\z/ }
 
   has_many :tasks, dependent: :restrict_with_exception
+  has_many :task_statuses, dependent: :destroy
 
   has_rich_text :description
 
@@ -35,7 +36,7 @@ class Project < ApplicationRecord
   private
 
   def schedule_post_init_job
-    ProjectPostInitJob.perform_later id
+    Projects::PostInitJob.perform_later id
   end
 
   def drop_tasks_number_sequence
