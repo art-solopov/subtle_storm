@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_06_21_203940) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_21_180400) do
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "body", size: :long
@@ -54,8 +54,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_06_21_203940) do
     t.string "code", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status"
     t.index ["code"], name: "index_projects_on_code", unique: true
     t.index ["name"], name: "index_projects_on_name"
+    t.index ["status"], name: "index_projects_on_status"
   end
 
   create_table "sessions", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|

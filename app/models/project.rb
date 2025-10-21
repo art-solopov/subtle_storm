@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Project < ApplicationRecord
+  enum :status, %i[preparing ready archived].index_by(&:itself), default: :preparing
+
   validates :name, :code, presence: true
   validates :code, exclusion: { in: %w[new] }, uniqueness: true, format: { with: /\A[a-z]{2,}\z/ }
 
@@ -10,7 +12,7 @@ class Project < ApplicationRecord
 
   normalizes :code, with: ->(code) { code.strip.downcase.gsub(/\W+/, '') }
 
-  after_commit :create_tasks_number_sequence, on: :create
+  after_commit :schedule_post_init_job, on: :create
   after_destroy_commit :drop_tasks_number_sequence
 
   def to_param
@@ -32,8 +34,8 @@ class Project < ApplicationRecord
 
   private
 
-  def create_tasks_number_sequence
-    self.class.connection.execute "CREATE SEQUENCE IF NOT EXISTS #{tasks_number_sequence_name} AS INT UNSIGNED"
+  def schedule_post_init_job
+    ProjectPostInitJob.perform_later id
   end
 
   def drop_tasks_number_sequence

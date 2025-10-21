@@ -4,7 +4,7 @@ class ProjectsController < ApplicationController
   before_action :fetch_project!, only: %w[show edit update destroy]
 
   def index
-    @projects = Project.all
+    @projects = available_projects
   end
 
   def show; end
@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
   def create
     @project = Project.new(project_params)
     if @project.save
-      redirect_to @project
+      redirect_to url_for(action: :index), notice: "Project #{@project.name} being created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -36,8 +36,12 @@ class ProjectsController < ApplicationController
 
   private
 
+  def available_projects
+    Project.ready
+  end
+
   def fetch_project!
-    @project = Project.find_by!(code: params[:id])
+    @project = available_projects.find_by!(code: params[:id])
     self.current_project = @project
   end
 
