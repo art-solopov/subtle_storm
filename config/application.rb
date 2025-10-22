@@ -43,5 +43,10 @@ module SubtleStorm
       g.system_tests nil
       g.template_engine :slim
     end
+
+    # Field error proc
+    config.action_view.field_error_proc = proc do |html_tag, instance|
+      field_error_helper(html_tag, instance)
+    end
   end
 end

@@ -33,3 +33,24 @@ site-sidebar {
         list-style: none;
     }
 }
+
+:root {
+    --error-color: rgb(155, 35, 24); /* Pico color red 650 */
+}
+
+form {
+    .field-with-errors {
+        input, select, textarea {
+            border-color: var(--error-color);
+
+            &:has(+ .error-text) {
+                margin-bottom: 0;
+            }
+        }
+
+        .error-text {
+            color: var(--error-color);
+            margin-bottom: var(--pico-spacing);
+        }
+    }
+}
