@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_25_131322) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_25_132011) do
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.text "body", size: :long
@@ -86,7 +86,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_25_131322) do
     t.string "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "status_id"
     t.index ["project_id"], name: "index_tasks_on_project_id"
+    t.index ["status_id"], name: "index_tasks_on_status_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
@@ -102,4 +104,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_25_131322) do
   add_foreign_key "sessions", "users"
   add_foreign_key "task_statuses", "projects"
   add_foreign_key "tasks", "projects"
+  add_foreign_key "tasks", "task_statuses", column: "status_id"
 end

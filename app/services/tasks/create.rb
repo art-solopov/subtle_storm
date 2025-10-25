@@ -5,6 +5,7 @@ module Tasks
     attribute :project_id, :integer
     attribute :title, :string
     attribute :description, :string
+    attribute :status_id, :integer
 
     validates :project_id, :title, presence: true
 
@@ -15,8 +16,8 @@ module Tasks
     def perform
       @project = Project.find(project_id)
 
-      @task = @project.tasks.build(title:, description:, number: @project.next_task_number)
-      @task.save.tap { @errors = @task.errors }
+      @task = @project.tasks.build(title:, description:, status_id:, number: @project.next_task_number)
+      save @task
     end
   end
 end

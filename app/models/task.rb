@@ -2,9 +2,11 @@
 
 class Task < ApplicationRecord
   belongs_to :project
+  belongs_to :status, class_name: 'TaskStatus'
 
   validates :number, :title, presence: true
   validates :number, numericality: { greater_than: 0 }
+  validate :associations_should_have_same_project
 
   has_rich_text :description
 
@@ -24,5 +26,13 @@ class Task < ApplicationRecord
     project_code, number = number_or_id.split('-')
     project = Project.find_by!(code: project_code.downcase)
     find_by!(project:, number:)
+  end
+
+  private
+
+  def associations_should_have_same_project
+    return if status&.project == project
+
+    errors.add(:status, "Doesn't belong in the same project")
   end
 end

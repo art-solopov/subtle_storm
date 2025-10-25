@@ -28,6 +28,10 @@ Bundler/OrderedGems:
 Style/Documentation:
   Enabled: false
 
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - db/migrate/**/*.rb
+
 Rails/ActionOrder:
   Enabled: false
 
