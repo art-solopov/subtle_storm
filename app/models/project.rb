@@ -3,7 +3,7 @@
 class Project < ApplicationRecord
   enum :status, %w[preparing ready archived].index_by(&:itself), default: :preparing
 
-  validates :name, :code, presence: true
+  validates :name, :code, :status, presence: true
   validates :code, exclusion: { in: %w[new] }, uniqueness: true, format: { with: /\A[a-z]{2,}\z/ }
 
   has_many :tasks, dependent: :restrict_with_exception

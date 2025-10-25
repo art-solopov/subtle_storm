@@ -7,6 +7,7 @@ services:
       MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 1
     volumes:
       - mariadb:/var/lib/mysql
+    profiles: [resources, dev]
 
 volumes:
   mariadb:
