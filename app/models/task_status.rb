@@ -7,4 +7,6 @@ class TaskStatus < ApplicationRecord
 
   validates :name, presence: true, uniqueness: { scope: :project }
   validates :category, presence: true
+
+  scope :default_order, -> { order(:category, :name) }
 end

@@ -1,9 +1,13 @@
 h1 New task
 
-= form_with model: @form do |form|
+= form_with model: @form, data: {controller: 'form-projects-selector', 'form-projects-selector-frame-value' => 'status_select'} do |form|
   .field
     = form.label :project_id
-    = form.select :project_id, Project.order(:name).map { |p| [p.name, p.id] }
+    = form.select :project_id, Project.order(:name).map { |p| [p.name, p.id, {'data-code': p.code}] }, {}, data: {action: 'form-projects-selector#changeProject'}
+  = turbo_frame_tag :status_select do
+    .field
+      = form.label :status_id
+      = form.select :status_id, TaskStatus.where(project: @form.project).default_order.map { |ts| [ts.name, ts.id] }
   .field
     = form.label :title
     = form.text_field :title

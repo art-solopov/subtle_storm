@@ -17,11 +17,12 @@ class TasksController < ApplicationController
   def show; end
 
   def new
-    @form = Tasks::Create.new(project_id: fetch_project&.id)
+    @project = fetch_project || Project.order(:name).first
+    @form = Tasks::Create.new(project_id: @project.id)
   end
 
   def create
-    @form = Tasks::Create.new(params.expect(task: %i[project_id title description]))
+    @form = Tasks::Create.new(params.expect(task: %i[project_id title description status_id]))
     if @form.perform
       redirect_to tasks_path(project: @form.project)
     else
@@ -30,11 +31,11 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @form = Tasks::Update.new(id: @task.id, title: @task.title, description: @task.description)
+    @form = Tasks::Update.new(@task.attributes.slice(*Tasks::Update.attribute_names))
   end
 
   def update
-    @form = Tasks::Update.new(params.expect(task: %i[title description]))
+    @form = Tasks::Update.new(params.expect(task: %i[title description status_id]))
 
     if @form.perform(@task)
       redirect_to task_path(@task)

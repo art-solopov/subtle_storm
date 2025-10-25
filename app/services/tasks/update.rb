@@ -5,6 +5,7 @@ module Tasks
     attribute :id, :integer
     attribute :title, :string
     attribute :description, :string
+    attribute :status_id, :integer
 
     validates :title, presence: true
 
@@ -15,7 +16,7 @@ module Tasks
     def perform(task)
       @task = task
       @id = task.id
-      @task.assign_attributes(title:, description:)
+      @task.assign_attributes(title:, description:, status_id:)
       save @task
     end
   end
