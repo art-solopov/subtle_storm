@@ -11,7 +11,7 @@ class TasksController < ApplicationController
                Task.all
              end
 
-    @tasks = @tasks.includes(:project)
+    @tasks = @tasks.includes(:project, :status)
   end
 
   def show; end

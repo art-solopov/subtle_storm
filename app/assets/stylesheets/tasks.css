@@ -1,0 +1,19 @@
+.task-status {
+    --color: var(--backlog-color);
+    --background-color: var(--backlog-bg);
+
+    &.analysis {
+        --color: var(--analysis-color);
+        --background-color: var(--analysis-bg);
+    }
+
+    &.development {
+        --color: var(--info-color);
+        --background-color: var(--info-bg);
+    }
+
+    &.fulfillment {
+        --color: var(--success-color);
+        --background-color: var(--success-bg);
+    }
+}

@@ -11,6 +11,7 @@ h1= tasks_index_title
         - cache task do
           tr
             td= link_to task.full_number, task_path(task)
+            td= task_status_badge task.status
             td= task.title
             td
               = link_to 'Edit', edit_task_path(task)
