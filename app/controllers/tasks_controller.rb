@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class TasksController < ApplicationController
-  before_action :fetch_task, only: %w[show edit update delete]
+  before_action :fetch_task, only: %w[show edit update delete change_status]
 
   def index
     self.current_project = fetch_project
@@ -11,7 +11,7 @@ class TasksController < ApplicationController
                Task.all
              end
 
-    @tasks = @tasks.includes(:project, :status)
+    @tasks = @tasks.includes(:status, project: :task_statuses)
   end
 
   def show; end
@@ -47,6 +47,19 @@ class TasksController < ApplicationController
   def delete
     @task.destroy!
     redirect_to tasks_path(project: @task.project)
+  end
+
+  def change_status
+    @form = Tasks::ChangeStatus.new(params.expect(task: :status_id))
+
+    if @form.perform(@task)
+      respond_to do |format|
+        format.html { redirect_to task_path(@task) }
+        format.turbo_stream
+      end
+    else
+      head :unprocessable_entity
+    end
   end
 
   private

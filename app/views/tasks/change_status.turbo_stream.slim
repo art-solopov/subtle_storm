@@ -1,0 +1,2 @@
+- selector_id = params.fetch(:selector_id)
+= turbo_stream.update selector_id, render(partial: 'status_selector_inner', locals: {selector_id:, task: @task, with_form: true})

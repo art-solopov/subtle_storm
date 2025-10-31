@@ -15,4 +15,12 @@ module TasksHelper
 
     content_tag(:span, status.name, class: ['badge', 'task-status', status.category.dasherize])
   end
+
+  def task_status_selector(task, selector_class: '', id: nil, with_form: false)
+    # TODO: extract into a component probably
+
+    raise 'You should pass id if you want the form' if with_form && id.blank?
+
+    render partial: 'tasks/status_selector', locals: { task:, selector_class:, id:, with_form: }
+  end
 end

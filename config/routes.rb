@@ -17,5 +17,7 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   resources :projects
-  resources :tasks
+  resources :tasks do
+    patch :change_status, on: :member
+  end
 end

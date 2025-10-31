@@ -4,8 +4,6 @@ class ApplicationService
   include ActiveModel::Model
   include ActiveModel::Attributes
 
-  attr_reader :errors
-
   def perform
     # Override this
   end
