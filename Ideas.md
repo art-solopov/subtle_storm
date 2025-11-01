@@ -1,0 +1,4 @@
+- Add ActionCable integration
+    - Task statuses sync
+- Add monitoring (Yabeda, Prometheus (?), Grafana (?))
+- Add full-text search (Elastic or Meili)
