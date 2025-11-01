@@ -2,6 +2,9 @@ div
   em= @task.full_number
 h1= @task.title
 
+section.task-show-info
+  = task_status_selector @task, id: "task_status_selector_#{@task.id}", with_form: true
+
 section= @task.description
 
 section

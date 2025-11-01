@@ -17,3 +17,8 @@
         --background-color: var(--success-bg);
     }
 }
+
+.task-show-info {
+    display: flex;
+    flex-flow: row nowrap;
+}
