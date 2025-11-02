@@ -19,7 +19,11 @@ module Projects
     private
 
     def create_tasks_number_sequence(project)
-      Project.connection.execute "CREATE SEQUENCE IF NOT EXISTS #{project.tasks_number_sequence_name} AS INT UNSIGNED"
+      Project.connection.execute <<~SQL.squish
+        CREATE SEQUENCE IF NOT EXISTS #{project.tasks_number_sequence_name}
+        AS INT UNSIGNED
+        NOCACHE
+      SQL
     end
   end
 end
