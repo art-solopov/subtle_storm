@@ -1,20 +1,12 @@
 h1= tasks_index_title
 
-.row
+section.row
   = link_to 'New', new_task_path(project: current_project&.code)
 
-- if @tasks.exists?
-  table.tasks-table
-    thead
-    tbody
-      - @tasks.each do |task|
-        - cache task do
-          tr
-            td= link_to task.full_number, task_path(task)
-            td
-              = task_status_selector task, with_form: true
-            td= task.title
-            td
-              = link_to 'Edit', edit_task_path(task)
-- else
-  p No tasks
+table.tasks-table
+  thead
+  tbody#tasks
+    = render partial: 'table_row', collection: @tasks, as: :task
+
+- if current_project
+  = turbo_stream_from current_project, :tasks
