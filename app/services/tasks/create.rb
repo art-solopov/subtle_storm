@@ -7,7 +7,7 @@ module Tasks
     attribute :description, :string
     attribute :status_id, :integer
 
-    validates :project_id, :title, presence: true
+    validates :project_id, :title, :status_id, presence: true
 
     delegate :model_name, to: Task
 
