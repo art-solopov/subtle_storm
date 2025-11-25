@@ -4,7 +4,7 @@ h1= tasks_index_title
   = link_to 'New', new_task_path(project: current_project&.code)
 
 - if @tasks.exists?
-  table
+  table.tasks-table
     thead
     tbody
       - @tasks.each do |task|
@@ -12,7 +12,7 @@ h1= tasks_index_title
           tr
             td= link_to task.full_number, task_path(task)
             td
-              = task_status_selector task, selector_class: 'small', id: "task_status_selector_#{task.id}", with_form: true
+              = task_status_selector task, with_form: true
             td= task.title
             td
               = link_to 'Edit', edit_task_path(task)

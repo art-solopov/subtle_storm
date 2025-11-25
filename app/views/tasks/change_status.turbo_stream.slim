@@ -1,2 +1,2 @@
-- selector_id = params.fetch(:selector_id)
-= turbo_stream.update selector_id, render(partial: 'status_selector_inner', locals: {selector_id:, task: @task, with_form: true})
+- view_model = Tasks::Statuses::SelectorViewModel.new(@task, with_form: true)
+= turbo_stream.replace view_model.dom_id, render(view_model)

@@ -76,14 +76,9 @@ form {
     text-transform: uppercase;
 }
 
-details.dropdown {
-    td & {
+table {
+    /* TODO: maybe extract into a separate file */
+    details.dropdown {
         margin: 0;
     }
-
-    &.small {
-        --pico-form-element-spacing-vertical: 0.25em;
-        --pico-form-element-spacing-horizontal: 0.5em;
-    }
-
 }
