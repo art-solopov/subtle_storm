@@ -1,2 +1,9 @@
-details.dropdown class=selector_class id=id data-controller="tasks--status-selector"
-  = render partial: 'status_selector_inner', locals: {selector_id: id, task:, with_form:}
+details.dropdown.task-status-selector id=id data-controller="tasks--status-selector"
+  summary= task_status_badge[task.status]
+  ul
+    - project_task_statuses.each do |status|
+      li
+        a href="#" data-status-id="#{status.id}" data-action="tasks--status-selector#changeStatus:prevent" = task_status_badge[status]
+  - if with_form
+    = form_with model: Tasks::ChangeStatus.new, url: change_status_task_path(task), method: :patch, data: {'tasks--status-selector-target': 'form', action: 'turbo:submit-end->tasks--status-selector#finalize'} do |f|
+      = f.hidden_field :status_id, data: {'tasks--status-selector-target': 'statusField'}
