@@ -2,3 +2,6 @@
     - Task statuses sync
 - Add monitoring (Yabeda, Prometheus (?), Grafana (?))
 - Add full-text search (Elastic or Meili)
+- User management
+    - Passkeys (probably with Warden)
+    - An easy way to "impersonate" for an admin
