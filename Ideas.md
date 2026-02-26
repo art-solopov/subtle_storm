@@ -5,3 +5,6 @@
 - User management
     - Passkeys (probably with Warden)
     - An easy way to "impersonate" for an admin
+- Better statuses customization
+- Audit trail
+    - Maybe use a separate database for that?
