@@ -3,7 +3,9 @@ div
 h1= @task.title
 
 section.task-show-info
-  = task_status_selector @task, id: "task_status_selector_#{@task.id}", with_form: true
+  = task_status_selector @task, with_form: true
+  = turbo_stream_from @task, :status, :with_form
+
 
 section= @task.description
 

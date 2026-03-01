@@ -14,6 +14,8 @@ module Projects
         create_default_task_statuses(project)
         project.update!(status: :ready)
       end
+
+      project.broadcast_append_later_to Project, :admin_table, partial: 'projects/row'
     end
 
     private

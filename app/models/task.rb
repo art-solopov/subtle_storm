@@ -10,6 +10,8 @@ class Task < ApplicationRecord
 
   has_rich_text :description
 
+  broadcasts_to ->(task) { [task.project, :tasks] }, template: 'tasks/_table_row'
+
   def to_param
     return full_number if association(:project).loaded?
 
