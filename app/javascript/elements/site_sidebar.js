@@ -41,21 +41,17 @@ export class SiteSidebar extends LitElement {
         padding-inline: var(--padding);
     }
 
-    .toggle-button {
-        display: inline-block;
-
-        font-size: 1.5rem;
-        height: var(--_button-size);
-        width: var(--_button-size);
-        padding: 0;
-        text-align: center;
-        vertical-align: middle;
-
-        border-radius: 50%;
-        box-sizing: border-box;
-
+    .toggle-button-container {
+        background-color: var(--pico-muted-border-color);
+        border: 3px solid var(--pico-muted-color);
+        border-radius: 1000px;
+        corner-shape: squircle;
         position: absolute;
         left: calc(100% + var(--_button-offset));
+
+        /* Mostly to fix the oversized hamburger */
+        scale: 60%;
+        transform-origin: 0 50%;
     }
 
     .bg {
@@ -89,9 +85,9 @@ export class SiteSidebar extends LitElement {
 
         return html`
         <aside class="${classMap(classes)}">
-            <button class="toggle-button" @click="${this._toggleOpen}">
-                <img src="${this.open ? closeIcon : openIcon}">
-            </button>
+            <div class="toggle-button-container">
+                <slot name="toggle-button" @click="${this._toggleOpen}"></slot>
+            </div>
             <div class="padding">
                 <slot></slot>
             </div>
@@ -106,7 +102,13 @@ export class SiteSidebar extends LitElement {
         return html`<div class="bg" @click="${this._toggleOpen}"></div>`
     }
 
-    _toggleOpen() {
+    _toggleOpen(event) {
+        // let button = event.target.closest('button')
+        let nodes = this.shadowRoot.querySelector('slot[name="toggle-button"]').assignedNodes()
+        let button = nodes.find(e => e.nodeName == 'BUTTON')
         this.open = !this.open
+
+        button.classList.toggle('is-active', this.open)
+        button.setAttribute('aria-pressed', this.open.toString())
     }
 }

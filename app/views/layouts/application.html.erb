@@ -18,6 +18,7 @@
     <link rel="apple-touch-icon" href="/icon.png">
 
     <%= stylesheet_link_tag 'pico.jade.min.css', "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag 'hamburgers-1.2.0.min.css', "data-turbo-track": "reload" %>
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
@@ -25,6 +26,11 @@
 
   <body>
       <site-sidebar id="global_sidebar">
+          <button slot="toggle-button" class="hamburger hamburger--vortex" type="button">
+              <span class="hamburger-box">
+                  <span class="hamburger-inner"></span>
+              </span>
+          </button>
           <h1>Subtle Storm</h1>
 
           <%= render partial: 'projects_selector' %>
