@@ -1,5 +1,5 @@
-- Add ActionCable integration
-    - Task statuses sync
+✔️ Add ActionCable integration
+    ✔️ Task statuses sync
 - Add monitoring (Yabeda, Prometheus (?), Grafana (?))
 - Add full-text search (Elastic or Meili)
 - User management
@@ -8,6 +8,9 @@
 - Better statuses customization
     - Custom colors/icons
     - Status transitions
+        - Ideally status editing *and* transitions editing on the same page — think how it could be achieved without something like Vue
     - Separate workflows? 
 - Audit trail
     - Maybe use a separate database for that?
+- Comments
+    - Reactions using ActionCable
