@@ -6,5 +6,8 @@
     - Passkeys (probably with Warden)
     - An easy way to "impersonate" for an admin
 - Better statuses customization
+    - Custom colors/icons
+    - Status transitions
+    - Separate workflows? 
 - Audit trail
     - Maybe use a separate database for that?
