@@ -316,6 +316,8 @@ GEM
     unicode-emoji (4.0.4)
     uri (1.1.1)
     useragent (0.16.11)
+    warden (1.2.9)
+      rack (>= 2.0.9)
     web-console (4.2.1)
       actionview (>= 6.0.0)
       activemodel (>= 6.0.0)
@@ -361,6 +363,7 @@ DEPENDENCIES
   trilogy (~> 2.7)
   turbo-rails
   tzinfo-data
+  warden (~> 1.2.0)
   web-console
 
 BUNDLED WITH
