@@ -1,11 +1,6 @@
 - cache task do
   tr id="task_#{task.id}"
-    td
-      / TODO: extract into a presenter (and especially add color)
-      - wf_icon = 'task_line'
-      - if task.workflow.icon == 'warning'
-        - wf_icon = 'warning_line'
-      = image_tag("mingcute/#{wf_icon}.svg", title: task.workflow.name)
+    td= workflow_display task.workflow
     td= link_to task.full_number, task_path(task)
     td
       = task_status_selector task, with_form: true

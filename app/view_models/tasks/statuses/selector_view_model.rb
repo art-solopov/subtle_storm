@@ -18,7 +18,7 @@ module Tasks
           partial: 'tasks/status_selector',
           locals: { task: @task, id: dom_id, with_form: @with_form,
                     workflow_task_statuses:,
-                    task_status_badge: ->(status) { task_status_badge(status, view_context) }}
+                    task_status_badge: ->(status) { task_status_badge(status, view_context) } }
         )
       end
 

@@ -1,0 +1,26 @@
+.workflow {
+    --bg-color: #D1D5DB; /* Pico zinc 150 */
+    --text-color: oklch(from var(--bg-color) calc(0.55 * l) calc(0.55 * c) h);
+
+    border-radius: 1em;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    min-width: 2em;
+    padding: 0.1em 0.5em;
+    gap: 0.5em;
+    text-align: center;
+
+    > img {
+        max-width: unset;
+        width: 1lh;
+        opacity: 0.6;
+    }
+
+    &.red {
+        --bg-color: #F06048; /* Pico red 400 */
+    }
+}
