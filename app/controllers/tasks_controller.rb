@@ -11,7 +11,7 @@ class TasksController < ApplicationController
                Task.all
              end
 
-    @tasks = @tasks.includes(:status, :workflow, project: :task_statuses)
+    @tasks = @tasks.includes(:status, :project, workflow: :task_statuses)
   end
 
   def show; end

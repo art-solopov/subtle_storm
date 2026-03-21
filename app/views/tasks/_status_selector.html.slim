@@ -1,7 +1,7 @@
 details.dropdown.task-status-selector id=id data-controller="tasks--status-selector"
   summary= task_status_badge[task.status]
   ul
-    - project_task_statuses.each do |status|
+    - workflow_task_statuses.each do |status|
       li
         a href="#" data-status-id="#{status.id}" data-action="tasks--status-selector#changeStatus:prevent" = task_status_badge[status]
   - if with_form

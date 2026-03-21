@@ -17,16 +17,15 @@ module Tasks
         view_context.render(
           partial: 'tasks/status_selector',
           locals: { task: @task, id: dom_id, with_form: @with_form,
-                    project_task_statuses:,
+                    workflow_task_statuses:,
                     task_status_badge: ->(status) { task_status_badge(status, view_context) }}
         )
       end
 
       private
 
-      def project_task_statuses
-        # TODO: refactor because it causes N+1 (task statuses loaded separately)
-        @task.project.task_statuses.default_order
+      def workflow_task_statuses
+        @task.workflow.task_statuses.sort_by { |e| [e.category, e.name] }
       end
 
       def task_status_badge(status, view_context)
