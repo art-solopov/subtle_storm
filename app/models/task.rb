@@ -34,8 +34,8 @@ class Task < ApplicationRecord
   private
 
   def associations_should_have_same_project
-    return if status&.project == project
+    return if [project, status.project, workflow.project].uniq == [project]
 
-    errors.add(:status, "Doesn't belong in the same project")
+    errors.add(:base, "Project isn't the same across associations")
   end
 end

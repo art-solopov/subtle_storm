@@ -8,6 +8,7 @@ class Project < ApplicationRecord
 
   has_many :tasks, dependent: :restrict_with_exception
   has_many :task_statuses, dependent: :destroy
+  has_many :workflows, dependent: :destroy
 
   has_rich_text :description
 

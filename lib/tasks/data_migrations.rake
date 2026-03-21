@@ -12,4 +12,27 @@ namespace :data_migrations do
       end
     end
   end
+
+  desc 'Create initial workflows for projects'
+  task create_initial_workflows: :environment do
+    Project.find_each do |project|
+      Projects::CreateDefaults.create_default_workflow(project)
+    end
+  end
+
+  desc 'Set workflows for statuses'
+  task set_default_task_status_workflows: :create_initial_workflows do
+    TaskStatus.includes(project: :workflows).find_each do |ts|
+      ts.workflow = ts.project.workflows.first
+      ts.save!
+    end
+  end
+
+  desc 'Set workflows for tasks'
+  task set_default_task_workflows: %i[create_initial_workflows set_default_task_status_workflows] do
+    Task.includes(project: :workflows).find_each do |task|
+      task.workflow = task.project.workflows.first
+      task.save!
+    end
+  end
 end

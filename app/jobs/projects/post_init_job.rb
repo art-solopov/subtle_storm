@@ -4,14 +4,15 @@ module Projects
   class PostInitJob < ApplicationJob
     queue_as :default
 
-    include Projects::CreateDefaultTaskStatuses
+    include Projects::CreateDefaults
 
     def perform(project_id)
       project = Project.preparing.find(project_id)
 
       project.transaction do
+        workflow = create_default_workflow(project)
         create_tasks_number_sequence(project)
-        create_default_task_statuses(project)
+        create_default_task_statuses(project, workflow)
         project.update!(status: :ready)
       end
 

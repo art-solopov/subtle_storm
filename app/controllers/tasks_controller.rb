@@ -11,7 +11,7 @@ class TasksController < ApplicationController
                Task.all
              end
 
-    @tasks = @tasks.includes(:status, project: :task_statuses)
+    @tasks = @tasks.includes(:status, :workflow, project: :task_statuses)
   end
 
   def show; end
@@ -22,7 +22,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @form = Tasks::Create.new(params.expect(task: %i[project_id title description status_id]))
+    @form = Tasks::Create.new(params.expect(task: %i[project_id title description status_id workflow_id]))
     if @form.perform
       redirect_to tasks_path(project: @form.project)
     else
