@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_01_141927) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_21_115521) do
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.text "body", size: :long
     t.datetime "created_at", null: false
@@ -75,9 +75,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_01_141927) do
     t.string "name", null: false
     t.bigint "project_id", null: false
     t.datetime "updated_at", null: false
+    t.bigint "workflow_id"
     t.index ["project_id", "category", "name"], name: "index_task_statuses_on_project_id_and_category_and_name"
     t.index ["project_id", "name"], name: "index_task_statuses_on_project_id_and_name", unique: true
     t.index ["project_id"], name: "index_task_statuses_on_project_id"
+    t.index ["workflow_id"], name: "index_task_statuses_on_workflow_id"
   end
 
   create_table "tasks", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
@@ -87,8 +89,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_01_141927) do
     t.bigint "status_id"
     t.string "title", null: false
     t.datetime "updated_at", null: false
+    t.bigint "workflow_id"
     t.index ["project_id"], name: "index_tasks_on_project_id"
     t.index ["status_id"], name: "index_tasks_on_status_id"
+    t.index ["workflow_id"], name: "index_tasks_on_workflow_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
@@ -99,10 +103,22 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_01_141927) do
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
   end
 
+  create_table "workflows", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.string "color", null: false
+    t.datetime "created_at", null: false
+    t.string "icon", null: false
+    t.string "name", null: false
+    t.bigint "project_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id", "name"], name: "index_workflows_on_project_id_and_name", unique: true
+    t.index ["project_id"], name: "index_workflows_on_project_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "sessions", "users"
   add_foreign_key "task_statuses", "projects"
   add_foreign_key "tasks", "projects"
   add_foreign_key "tasks", "task_statuses", column: "status_id"
+  add_foreign_key "workflows", "projects"
 end

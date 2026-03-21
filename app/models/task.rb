@@ -3,6 +3,7 @@
 class Task < ApplicationRecord
   belongs_to :project
   belongs_to :status, class_name: 'TaskStatus'
+  belongs_to :workflow
 
   validates :number, :title, presence: true
   validates :number, numericality: { greater_than: 0 }

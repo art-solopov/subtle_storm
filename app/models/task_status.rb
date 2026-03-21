@@ -2,6 +2,7 @@
 
 class TaskStatus < ApplicationRecord
   belongs_to :project
+  belongs_to :workflow
 
   enum :category, { backlog: 100, analysis: 1000, development: 20_000, fulfillment: 60_000 }
 
