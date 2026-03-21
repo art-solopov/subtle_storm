@@ -18,7 +18,8 @@ class TasksController < ApplicationController
 
   def new
     @project = fetch_project || Project.order(:name).first
-    @form = Tasks::Create.new(project_id: @project.id)
+    @workflow = fetch_workflow || @project.workflows.first
+    @form = Tasks::Create.new(project_id: @project.id, workflow_id: @workflow.id)
   end
 
   def create
@@ -68,6 +69,12 @@ class TasksController < ApplicationController
     return nil if params[:project].blank?
 
     Project.find_by!(code: params[:project])
+  end
+
+  def fetch_workflow
+    return nil if params[:workflow_id].blank?
+
+    @project.workflows.find(params[:workflow_id])
   end
 
   def fetch_task
