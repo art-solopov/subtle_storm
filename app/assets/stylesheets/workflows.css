@@ -1,26 +1,25 @@
 .workflow {
-    --bg-color: #D1D5DB; /* Pico zinc 150 */
-    --text-color: oklch(from var(--bg-color) calc(0.55 * l) calc(0.55 * c) h);
+    --color: #424751; /* Pico zinc 700 */
 
     border-radius: 1em;
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    outline: 2px solid var(--color);
 
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: center;
+    display: inline-flex;
+    gap: 0.25em;
     min-width: 2em;
     padding: 0.1em 0.5em;
-    gap: 0.5em;
-    text-align: center;
+
+    > .mask-icon {
+        --icon-color: var(--color);
+    }
 
     > img {
         max-width: unset;
         width: 1lh;
-        opacity: 0.6;
+        opacity: 0.75;
     }
 
     &.red {
-        --bg-color: #F06048; /* Pico red 400 */
+        --color: #BD3C13; /* Pico orange 550 */
     }
 }
