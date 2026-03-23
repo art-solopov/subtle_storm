@@ -1,6 +1,6 @@
 - cache task do
   tr id="task_#{task.id}"
-    td= workflow_display task.workflow
+    td= workflow_display task.workflow, badge: true
     td= link_to task.full_number, task_path(task)
     td
       = task_status_selector task, with_form: true

@@ -8,4 +8,5 @@ h1
 
 = turbo_frame_tag(id) do
   = content
-  = turbo_stream.replace(tabs_id, tabs)
+  - if turbo_frame_request?
+    = turbo_stream.replace(tabs_id, tabs)

@@ -7,21 +7,22 @@ module Workflows
       warning: 'warning_line'
     }.freeze
 
-    def initialize(workflow, full: false)
+    def initialize(workflow, badge: false, full: false)
       @workflow = workflow
+      @badge = badge
       @full = full
     end
 
-    def icon
-      icon = ICONS.fetch(@workflow.icon.to_sym, DEFAULT_ICON)
+    attr_reader :full, :badge
 
-      "mingcute/#{icon}.svg"
+    def icon
+      ICONS.fetch(@workflow.icon.to_sym, DEFAULT_ICON)
     end
 
     def render_in(view_context)
       view_context.render(
         partial: 'workflows/display',
-        locals: @workflow.attributes.symbolize_keys.merge(icon:, full: @full)
+        locals: @workflow.attributes.symbolize_keys.merge(full:, badge:, icon:)
       )
     end
   end

@@ -9,6 +9,12 @@
     --color: var(--backlog-color);
     --background-color: var(--backlog-bg);
 
+    &.badge {
+        border: 2px solid var(--border-color, currentColor);
+        color: var(--color, currentColor);
+        background-color: var(--background-color);
+    }
+
     &.analysis {
         --color: var(--analysis-color);
         --background-color: var(--analysis-bg);

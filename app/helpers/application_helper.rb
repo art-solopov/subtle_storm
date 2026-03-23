@@ -8,12 +8,11 @@ module ApplicationHelper
   end
 
   def mask_icon(icon, **options)
-    # Renders a span as a masked icon
-    case options[:class]
-    when String then options[:class] += ' mask-icon'
-    when nil then options[:class] = 'mask-icon'
-    else options[:class] = Array(options[:class]) + ['mask-icon']
-    end
-    content_tag(:span, '', style: "--icon: url(#{image_path(icon)})", **options)
+    klass = options.delete(:class)
+    klass = Array(klass)
+    klass << 'mask-icon'
+
+    icon_path = image_path("mingcute/#{icon}.svg")
+    content_tag(:span, '', class: klass, style: "--icon: url(#{icon_path})", **options)
   end
 end

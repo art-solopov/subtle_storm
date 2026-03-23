@@ -1,25 +1,29 @@
 .workflow {
     --color: #424751; /* Pico zinc 700 */
+    --icon: url("mingcute/task_line.svg");
 
-    border-radius: 1em;
-    outline: 2px solid var(--color);
-
-    display: inline-flex;
-    gap: 0.25em;
-    min-width: 2em;
-    padding: 0.1em 0.5em;
+    &.badge {
+        outline: 2px solid var(--color);
+        color: var(--color);
+    }
 
     > .mask-icon {
         --icon-color: var(--color);
     }
 
-    > img {
-        max-width: unset;
-        width: 1lh;
-        opacity: 0.75;
-    }
-
     &.red {
         --color: #BD3C13; /* Pico orange 550 */
+    }
+
+    &.blue {
+        --color: #1D59D0; /* Pico blue 600 */
+    }
+
+    &.lime {
+        --color: #628100; /* Pico lime 500 */
+    }
+
+    &.teal {
+        --color: #047878; /* Pico cyan 550 */
     }
 }
