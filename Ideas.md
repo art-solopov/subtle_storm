@@ -1,5 +1,5 @@
-✔️ Add ActionCable integration
-    ✔️ Task statuses sync
+- ✔️ Add ActionCable integration
+    - ✔️ Task statuses sync
 - Add monitoring (Yabeda, Prometheus (?), Grafana (?))
 - Add full-text search (Elastic or Meili)
 - User management
@@ -14,3 +14,5 @@
     - Maybe use a separate database for that?
 - Comments
     - Reactions using ActionCable
+- Subscriptions and notifications
+    - Use Cassandra for notifications
