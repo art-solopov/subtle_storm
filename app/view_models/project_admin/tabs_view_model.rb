@@ -22,7 +22,7 @@ module ProjectAdmin
     def links
       {
         'Data' => edit_project_path(@project),
-        'Workflows' => project_workflows_path(@project)
+        'Workflows' => project_admin_workflows_path(@project)
       }
     end
   end

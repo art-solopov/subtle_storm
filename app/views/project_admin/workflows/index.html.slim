@@ -6,4 +6,5 @@
     article.row
       = workflow_display(workflow, full: true)
       ul.links.right
-        li= link_to 'Edit', edit_project_workflow_path(@project, workflow), target: '_blank'
+        li= link_to 'Info', project_admin_workflow_path(@project, workflow), target: '_blank'
+        li= link_to 'Edit', edit_project_admin_workflow_path(@project, workflow), target: '_blank'

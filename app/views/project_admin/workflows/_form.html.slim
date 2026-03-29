@@ -1,0 +1,14 @@
+= form_with model: @form, url: url do |form|
+  .field
+    = form.label :name
+    = form.text_field :name
+  .field
+    / TODO: replace with radio buttons maybe
+    = form.label :color
+    = form.select :color, Workflow.colors
+  .field
+    / TODO: replace with radio buttons maybe
+    = form.label :icon
+    = form.select :icon, Workflow.icons
+  .submit
+    = form.submit 'Submit'
