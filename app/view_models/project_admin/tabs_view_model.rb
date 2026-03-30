@@ -4,8 +4,8 @@ module ProjectAdmin
   class TabsViewModel
     include Rails.application.routes.url_helpers
 
-    def initialize(project, id:, frame:)
-      @project = project
+    def initialize(links, id:, frame:)
+      @links = links
       @id = id
       @frame = frame
     end
@@ -13,17 +13,8 @@ module ProjectAdmin
     def render_in(view_context)
       view_context.render(
         partial: 'project_admin/tabs',
-        locals: { project: @project, links:, id: @id, frame: @frame }
+        locals: { project: @project, id: @id, frame: @frame, links: @links }
       )
-    end
-
-    private
-
-    def links
-      {
-        'Data' => edit_project_path(@project),
-        'Workflows' => project_admin_workflows_path(@project)
-      }
     end
   end
 end
