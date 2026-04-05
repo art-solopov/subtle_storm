@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_21_132740) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_04_215813) do
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.text "body", size: :long
     t.datetime "created_at", null: false
@@ -70,9 +70,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_21_132740) do
   end
 
   create_table "task_statuses", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
-    t.integer "category", limit: 2, null: false, unsigned: true
+    t.string "color"
     t.datetime "created_at", null: false
+    t.string "icon"
     t.string "name", null: false
+    t.integer "position", default: 0
     t.datetime "updated_at", null: false
     t.bigint "workflow_id", null: false
     t.index ["workflow_id", "name"], name: "index_task_statuses_on_workflow_id_and_name", unique: true

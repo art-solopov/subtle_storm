@@ -3,6 +3,16 @@
 module Tasks
   module Statuses
     class SelectorViewModel
+      ICONS = {
+        new: 'add_circle_fill',
+        archived: 'archive_line',
+        done: 'checks_line',
+        circle_dash: 'circle_dash_line',
+        hammer: 'hammer_fill',
+        play: 'play_circle_fill',
+        tool: 'tool_line'
+      }.freeze
+
       def initialize(task, with_form: false)
         @task = task
         @with_form = with_form
@@ -25,14 +35,18 @@ module Tasks
       private
 
       def workflow_task_statuses
-        @task.workflow.task_statuses.sort_by { |e| [e.category, e.name] }
+        @task.workflow.task_statuses.sort_by { |e| [e.position, e.name] }
       end
 
       def task_status_badge(status, view_context)
         view_context.content_tag(
-          :span, status.name,
-          class: ['badge', 'task-status', status.category.dasherize]
+          :span, view_context.mask_icon(icon(status)) + status.name,
+          class: ['badge', 'task-status', status.color]
         )
+      end
+
+      def icon(status)
+        ICONS.fetch(status.icon.to_sym)
       end
     end
   end

@@ -40,10 +40,6 @@ site-sidebar {
     /* For jade, light on dark looks better */
     --success-color: #70FCBA;  /* Pico jade 100 */
     --success-bg: #015234; /* Pico jade 700 */
-    --backlog-color: #424751; /* Pico zinc 700 */
-    --backlog-bg: #E0E3E7; /* Pico zinc 100 */ 
-    --analysis-color: #5B4200; /* Pico amber 700 */
-    --analysis-bg: #FDDEA6; /* Pico amber 100 */
     --info-color: #014C75; /* Pico azure 700 */
     --info-bg: #D1E5FB; /* Pico azure 100 */
 }

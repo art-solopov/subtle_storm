@@ -35,4 +35,11 @@ namespace :data_migrations do
       task.save!
     end
   end
+
+  desc 'Backfill task status icons and colors'
+  task backfill_task_status_icons_and_colors: :environment do
+    TaskStatus.in_batches do |batch|
+      batch.update_all(icon: 'circle_dash', color: 'blue')
+    end
+  end
 end

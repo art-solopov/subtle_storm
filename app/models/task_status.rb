@@ -4,10 +4,11 @@ class TaskStatus < ApplicationRecord
   belongs_to :workflow
   has_one :project, through: :workflow
 
-  enum :category, { backlog: 100, analysis: 1000, development: 20_000, fulfillment: 60_000 }
+  enum :icon, %w[new achived done circle_dash hammer play tool].index_by(&:itself), default: 'new', scopes: false
+  enum :color, %w[blue gray yellow green purple pink].index_by(&:itself), default: 'gray', scopes: false
 
   validates :name, presence: true, uniqueness: { scope: :workflow }
   validates :category, presence: true
 
-  scope :default_order, -> { order(:category, :name) }
+  scope :default_order, -> { order(:position, :name) }
 end

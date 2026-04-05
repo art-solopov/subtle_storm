@@ -6,8 +6,8 @@
 }
 
 .task-status {
-    --color: var(--backlog-color);
-    --background-color: var(--backlog-bg);
+    --color: #424751; /* Pico zinc 700 */
+    --background-color: #E0E3E7; /* Pico zinc 100 */
 
     &.badge {
         border: 2px solid var(--border-color, currentColor);
@@ -15,19 +15,29 @@
         background-color: var(--background-color);
     }
 
-    &.analysis {
-        --color: var(--analysis-color);
-        --background-color: var(--analysis-bg);
+    &.blue {
+        --color: #1D59D0; /* Pico blue 600 */
+        --background-color: #E0E1FA/* Pico blue 100 */
     }
 
-    &.development {
-        --color: var(--info-color);
-        --background-color: var(--info-bg);
+    &.yellow {
+        --background-color: #FDDEA6; /* Pico amber 100 */
+        --border-color: #A77C00; /* Pico amber 450 */
     }
 
-    &.fulfillment {
+    &.green {
         --color: var(--success-color);
         --background-color: var(--success-bg);
+    }
+
+    &.purple {
+        --color: #9236A4; /* Pico purple 600 */
+        --background-color: #F2DCF4; /* Pico purple 100 */
+    }
+
+    &.pink {
+        --color: #B21E4F; /* Pico pink 600 */
+        --background-color: #F9DBDF; /* Pico pink 100 */
     }
 }
 
