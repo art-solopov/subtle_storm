@@ -21,9 +21,11 @@ Rails.application.routes.draw do
   resources :projects do
     namespace :project_admin, as: 'admin' do
       resources :workflows do
-        namespace :statuses do
-          get '/', action: :index
-          patch '/', action: :batch_update
+        scope module: :workflows do
+          resources :statuses, only: %i[index] do
+            get :edit, on: :collection
+            put '/', action: :batch_update, on: :collection
+          end
         end
       end
     end

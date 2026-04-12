@@ -5,4 +5,4 @@ h1
 
 ul
   - @workflow.task_statuses.each do |status|
-    li= status.name
+    li= task_status_badge(status)

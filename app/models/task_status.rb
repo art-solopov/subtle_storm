@@ -8,7 +8,6 @@ class TaskStatus < ApplicationRecord
   enum :color, %w[blue gray yellow green purple pink].index_by(&:itself), default: 'gray', scopes: false
 
   validates :name, presence: true, uniqueness: { scope: :workflow }
-  validates :category, presence: true
 
   scope :default_order, -> { order(:position, :name) }
 end
