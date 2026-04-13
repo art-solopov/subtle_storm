@@ -28,26 +28,44 @@ module ProjectAdmin
           @task_statuses = Array(attributes).map { |e| TaskStatus.new(e) }
         end
 
-        def perform(workflow)
+        def call(workflow)
           @workflow = workflow
           task_status_models = @workflow.task_statuses.index_by(&:id)
 
           @workflow.transaction(requires_new: true) do
             task_statuses.each do |ts|
-              model = task_status_models.fetch(ts.id.to_i)
-              if ts._destroy
-                model.destroy!
+              if ts.id.start_with?('_')
+                create_model!(ts)
               else
-                model.update!(
-                  name: ts.name,
-                  icon: ts.icon,
-                  color: ts.color
-                )
+                model = task_status_models.fetch(Integer(ts.id))
+                if ts._destroy
+                  model.destroy!
+                else
+                  update_model!(model, ts)
+                end
               end
             end
           end
 
           true
+        end
+
+        private
+
+        def update_model!(model, form)
+          model.update!(
+            name: form.name,
+            icon: form.icon,
+            color: form.color
+          )
+        end
+
+        def create_model!(form)
+          @workflow.task_statuses.create!(
+            name: form.name,
+            icon: form.icon,
+            color: form.color
+          )
         end
       end
     end

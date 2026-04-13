@@ -1,0 +1,17 @@
+- with_destroy ||= false
+
+div.fieldset data-dynamic-forms-target="subform"
+  = ff.hidden_field :id
+  - if with_destroy
+    = ff.hidden_field :_destroy
+  .field
+    = ff.label :name
+    = ff.text_field :name
+  .field
+    = ff.label :color
+    = ff.select :color, TaskStatus.colors
+  .field
+    = ff.label :icon
+    = ff.select :icon, TaskStatus.icons
+  .buttons
+    = button_tag 'Destroy', type: :button, class: 'danger', data: { action: (with_destroy ? 'dynamic-forms#toggleSubform' : 'dynamic-forms#deleteSubform') }

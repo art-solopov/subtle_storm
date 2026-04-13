@@ -17,7 +17,7 @@ module ProjectAdmin
         end
 
         @form = ProjectAdmin::Workflows::Statuses::BatchUpdate.new(form_params)
-        if @form.perform(@workflow)
+        if @form.call(@workflow)
           redirect_to project_admin_workflow_path(@project, @workflow)
         else
           render :edit
