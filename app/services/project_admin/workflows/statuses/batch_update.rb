@@ -13,6 +13,18 @@ module ProjectAdmin
           attribute :name
           attribute :color
           attribute :icon
+
+          def to_model_attributes
+            return attributes.except('id', '_destroy') unless persisted?
+
+            if persisted? && _destroy
+              { id:, _destroy: }
+            else
+              attributes.except('_destroy')
+            end
+          end
+
+          def persisted? = id.present? && !id.to_s.start_with?('_')
         end
 
         attr_accessor :task_statuses
@@ -30,42 +42,9 @@ module ProjectAdmin
 
         def call(workflow)
           @workflow = workflow
-          task_status_models = @workflow.task_statuses.index_by(&:id)
 
-          @workflow.transaction(requires_new: true) do
-            task_statuses.each do |ts|
-              if ts.id.start_with?('_')
-                create_model!(ts)
-              else
-                model = task_status_models.fetch(Integer(ts.id))
-                if ts._destroy
-                  model.destroy!
-                else
-                  update_model!(model, ts)
-                end
-              end
-            end
-          end
-
-          true
-        end
-
-        private
-
-        def update_model!(model, form)
-          model.update!(
-            name: form.name,
-            icon: form.icon,
-            color: form.color
-          )
-        end
-
-        def create_model!(form)
-          @workflow.task_statuses.create!(
-            name: form.name,
-            icon: form.icon,
-            color: form.color
-          )
+          @workflow.assign_attributes(task_statuses_attributes: task_statuses.map(&:to_model_attributes))
+          save @workflow
         end
       end
     end
