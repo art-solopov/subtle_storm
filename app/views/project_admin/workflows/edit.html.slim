@@ -1,5 +1,2 @@
-h1
-  | Editing workflow
-  =< @workflow.name
-
-= render 'form', url: project_admin_workflow_path(@project, @workflow)
+= project_admin_workflow_frame(@workflow) do
+  = render 'form', url: project_admin_workflow_path(@project, @workflow)

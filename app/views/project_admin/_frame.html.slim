@@ -2,7 +2,8 @@ h1
   span> Project
   span= @project.name
 
-= link_to '← Back', project_path(@project)
+- if back_path
+  = link_to '← Back', back_path
 
 = render tabs
 

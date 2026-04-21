@@ -1,7 +1,12 @@
 h1
   | Workflow
 
-= workflow_display @workflow, full: true, badge: true
+.row
+  = workflow_display @workflow, full: true, badge: true
+  .links
+    = link_to 'Edit', edit_project_admin_workflow_path(@project, @workflow)
+
+h2 Statuses
 
 ul
   - @workflow.task_statuses.each do |status|

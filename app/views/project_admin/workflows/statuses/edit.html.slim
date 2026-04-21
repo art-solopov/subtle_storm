@@ -1,14 +1,15 @@
-= form_with model: @form, scope: 'workflow', url: project_admin_workflow_statuses_path(@project, @workflow), method: :put, data: {controller: 'dynamic-forms', 'dynamic-forms-field-name-value': 'task_statuses_attributes', 'dynamic-forms-field-template-value': '_extra_form', 'dynamic-forms-index-template-value': '__index__', 'dynamic-forms-count-value': @form.task_statuses.count} do |f|
-  section.workflow-statuses-batch-update-fieldsets data-dynamic-forms-target="container"
-    = f.fields_for :task_statuses, include_id: false do |tsf|
-      = render 'batch_update_fieldset', ff: tsf, with_destroy: true
+= project_admin_workflow_frame(@workflow) do
+  = form_with model: @form, scope: 'workflow', url: project_admin_workflow_statuses_path(@project, @workflow), method: :put, data: {controller: 'dynamic-forms', 'dynamic-forms-field-name-value': 'task_statuses_attributes', 'dynamic-forms-field-template-value': '_extra_form', 'dynamic-forms-index-template-value': '__index__', 'dynamic-forms-count-value': @form.task_statuses.count} do |f|
+    section.workflow-statuses-batch-update-fieldsets data-dynamic-forms-target="container"
+      = f.fields_for :task_statuses, include_id: false do |tsf|
+        = render 'batch_update_fieldset', ff: tsf, with_destroy: true
 
-  .buttons
-    button.success type="button" data-action="dynamic-forms#addForm" Add status
+    .buttons
+      button.success type="button" data-action="dynamic-forms#addForm" Add status
 
-  = f.fields_for :'_extra_form', index: '__index__' do |exf|
-    template data-dynamic-forms-target="template"
-      = render 'batch_update_fieldset', ff: exf
+    = f.fields_for :'_extra_form', index: '__index__' do |exf|
+      template data-dynamic-forms-target="template"
+        = render 'batch_update_fieldset', ff: exf
 
-  .submit
-    = f.submit
+    .submit
+      = f.submit
