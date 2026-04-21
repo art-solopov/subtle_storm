@@ -12,16 +12,23 @@ module ProjectAdmin
       # TODO: add loading statuses and other things
     end
 
-    def edit
-      @form = ProjectAdmin::Workflows::Update.new(
-        @workflow.attributes.slice('name', 'icon', 'color')
-      )
+    def new
+      @workflow = @project.workflows.build
     end
 
-    def update
-      @form = ProjectAdmin::Workflows::Update.new(params.expect(workflow: %i[name color icon]))
+    def create
+      @workflow = @project.workflows.build(workflow_params)
+      if @workflow.save
+        redirect_to project_admin_workflow_path(@project, @workflow)
+      else
+        render :new, status: :unprocessable_entity
+      end
+    end
 
-      if @form.perform(@workflow)
+    def edit; end
+
+    def update
+      if @workflow.update(workflow_params)
         redirect_to project_admin_workflow_path(@project, @workflow)
       else
         render :edit, status: :unprocessable_entity
@@ -35,6 +42,10 @@ module ProjectAdmin
 
     def fetch_workflow
       @workflow = @project.workflows.find(params[:id])
+    end
+
+    def workflow_params
+      params.expect(workflow: %i[name color icon])
     end
   end
 end

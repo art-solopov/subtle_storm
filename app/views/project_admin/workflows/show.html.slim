@@ -3,7 +3,7 @@ h1
 
 .row
   = workflow_display @workflow, full: true, badge: true
-  .links
+  .links.right
     = link_to 'Edit', edit_project_admin_workflow_path(@project, @workflow)
 
 h2 Statuses

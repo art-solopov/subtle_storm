@@ -1,4 +1,4 @@
-= form_with model: @form, url: url do |form|
+= form_with model: @workflow, url: url, data: {'turbo-frame': '_top'} do |form|
   .field
     = form.label :name
     = form.text_field :name
