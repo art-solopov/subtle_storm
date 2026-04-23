@@ -8,7 +8,7 @@ h1 New task
     fieldset data={controller: 'dependent-frames-selector', 'dependent-frames-selector-param-value': 'workflow_id'}
       .field
         = form.label :workflow
-        = form.select :workflow_id, Workflow.where(project: @form.project).map { |w| [w.name, w.id] }, {}, data: {action: 'dependent-frames-selector#refresh'}
+        = form.select :workflow_id, workflows_for_tasks.map { |w| [w.name, w.id] }, {}, data: {action: 'dependent-frames-selector#refresh'}
 
       = turbo_frame_tag :status_select, data: {'dependent-frames-selector-target': 'frame'}
       .field

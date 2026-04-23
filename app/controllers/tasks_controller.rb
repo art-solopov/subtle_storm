@@ -3,6 +3,8 @@
 class TasksController < ApplicationController
   before_action :fetch_task, only: %w[show edit update delete change_status]
 
+  helper_method :workflows_for_tasks
+
   def index
     self.current_project = fetch_project
     @tasks = if current_project
@@ -17,7 +19,7 @@ class TasksController < ApplicationController
   def show; end
 
   def new
-    @project = fetch_project || Project.order(:name).first
+    @project = self.current_project = fetch_project || Project.order(:name).first
     @workflow = fetch_workflow || @project.workflows.first
     @form = Tasks::Create.new(project_id: @project.id, workflow_id: @workflow.id)
   end
@@ -80,5 +82,9 @@ class TasksController < ApplicationController
   def fetch_task
     @task = Task.includes(:project).find_by_full_number_or_id!(params[:id])
     self.current_project = @task.project
+  end
+
+  def workflows_for_tasks
+    @project.workflows.joins(:task_statuses).distinct
   end
 end

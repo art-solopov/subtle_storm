@@ -8,6 +8,7 @@ module ProjectAdmin
 
     def fetch_project
       @project = Project.find_by!(code: params[:project_id])
+      self.current_project = @project
     end
   end
 end
