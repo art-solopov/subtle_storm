@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_04_215813) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_25_112121) do
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.text "body", size: :long
     t.datetime "created_at", null: false
@@ -69,6 +69,15 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_04_215813) do
     t.index ["user_id"], name: "index_sessions_on_user_id"
   end
 
+  create_table "task_status_transitions", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.bigint "from_id", null: false
+    t.bigint "to_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["from_id"], name: "index_task_status_transitions_on_from_id"
+    t.index ["to_id"], name: "index_task_status_transitions_on_to_id"
+  end
+
   create_table "task_statuses", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "color"
     t.datetime "created_at", null: false
@@ -116,6 +125,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_04_215813) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "sessions", "users"
+  add_foreign_key "task_status_transitions", "task_statuses", column: "from_id"
+  add_foreign_key "task_status_transitions", "task_statuses", column: "to_id"
   add_foreign_key "tasks", "projects"
   add_foreign_key "tasks", "task_statuses", column: "status_id"
   add_foreign_key "workflows", "projects"
