@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_25_112121) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_25_123859) do
   create_table "action_text_rich_texts", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.text "body", size: :long
     t.datetime "created_at", null: false
@@ -114,10 +114,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_25_112121) do
   create_table "workflows", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "color", null: false
     t.datetime "created_at", null: false
+    t.bigint "default_status_id"
     t.string "icon", null: false
     t.string "name", null: false
     t.bigint "project_id", null: false
     t.datetime "updated_at", null: false
+    t.index ["default_status_id"], name: "index_workflows_on_default_status_id"
     t.index ["project_id", "name"], name: "index_workflows_on_project_id_and_name", unique: true
     t.index ["project_id"], name: "index_workflows_on_project_id"
   end
@@ -130,4 +132,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_25_112121) do
   add_foreign_key "tasks", "projects"
   add_foreign_key "tasks", "task_statuses", column: "status_id"
   add_foreign_key "workflows", "projects"
+  add_foreign_key "workflows", "task_statuses", column: "default_status_id"
 end

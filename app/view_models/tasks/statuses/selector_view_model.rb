@@ -40,7 +40,11 @@ module Tasks
       private
 
       def workflow_task_statuses
-        @task.workflow.task_statuses.sort_by { |e| [e.position, e.name] }
+        return @task.workflow.task_statuses.sort_by { |e| [e.position, e.name] } if @task.status.next_statuses.empty?
+
+        @task.status.next_statuses.sort_by { |e| [e.position, e.name] }.tap do |statuses|
+          statuses.prepend(@task.status)
+        end
       end
     end
   end

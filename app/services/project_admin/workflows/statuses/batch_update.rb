@@ -40,7 +40,7 @@ module ProjectAdmin
           @task_statuses = Array(attributes).map { |e| TaskStatus.new(e) }
         end
 
-        def call(workflow)
+        def perform(workflow)
           @workflow = workflow
 
           @workflow.assign_attributes(task_statuses_attributes: task_statuses.map(&:to_model_attributes))

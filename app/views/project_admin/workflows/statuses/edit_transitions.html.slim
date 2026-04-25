@@ -3,6 +3,7 @@
     = f.fields_for :task_statuses do |tsf|
       section
         div= task_status_badge tsf.object
+        div= f.radio_button :default_status_id, tsf.object.id
         div= tsf.collection_checkboxes :next_status_ids, @workflow.task_statuses - [tsf.object], :id, :name
 
     .submit

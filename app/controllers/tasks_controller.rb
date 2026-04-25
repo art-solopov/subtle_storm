@@ -13,7 +13,7 @@ class TasksController < ApplicationController
                Task.all
              end
 
-    @tasks = @tasks.includes(:status, :project, workflow: :task_statuses)
+    @tasks = @tasks.includes(:project, workflow: %i[task_statuses default_status], status: :next_statuses)
   end
 
   def show; end
@@ -21,7 +21,8 @@ class TasksController < ApplicationController
   def new
     @project = self.current_project = fetch_project || Project.order(:name).first
     @workflow = fetch_workflow || @project.workflows.first
-    @form = Tasks::Create.new(project_id: @project.id, workflow_id: @workflow.id)
+    @form = Tasks::Create.new(project_id: @project.id, workflow_id: @workflow.id,
+                              status_id: @workflow.default_status&.id)
   end
 
   def create

@@ -17,7 +17,7 @@ module ProjectAdmin
         end
 
         @form = ProjectAdmin::Workflows::Statuses::BatchUpdate.new(form_params)
-        if @form.call(@workflow)
+        if @form.perform(@workflow)
           redirect_to(action: :edit_transitions)
         else
           render :edit
@@ -29,13 +29,14 @@ module ProjectAdmin
       end
 
       def batch_update_transitions
-        form_params = params.expect(workflow: { task_statuses_attributes: [[:id, { next_status_ids: [] }]] })
+        form_params = params.expect(workflow: [:default_status_id,
+                                               { task_statuses_attributes: [[:id, { next_status_ids: [] }]] }])
         if form_params[:task_statuses_attributes].respond_to?(:keys)
           form_params[:task_statuses_attributes] = form_params[:task_statuses_attributes].values
         end
 
         @form = ProjectAdmin::Workflows::Statuses::UpdateTransitions.new(form_params)
-        if @form.call(@workflow)
+        if @form.perform(@workflow)
           redirect_to project_admin_workflow_path(@project, @workflow)
         else
           render :edit_transitions
