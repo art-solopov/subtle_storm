@@ -40,10 +40,6 @@ site-sidebar {
     /* For jade, light on dark looks better */
     --success-color: #70FCBA;  /* Pico jade 100 */
     --success-bg: #015234; /* Pico jade 700 */
-    --backlog-color: #424751; /* Pico zinc 700 */
-    --backlog-bg: #E0E3E7; /* Pico zinc 100 */ 
-    --analysis-color: #5B4200; /* Pico amber 700 */
-    --analysis-bg: #FDDEA6; /* Pico amber 100 */
     --info-color: #014C75; /* Pico azure 700 */
     --info-bg: #D1E5FB; /* Pico azure 100 */
 }
@@ -65,20 +61,31 @@ form {
     }
 }
 
-.badge {
-    font-size: 0.875em;
-    padding: 0.25em 0.5em;
-    border: 1px solid var(--border-color, currentColor);
-    color: var(--color, currentColor);
-    background-color: var(--background-color, transparent);
-    border-radius: 1em / 0.5em;
-    font-weight: 500;
-    text-transform: uppercase;
-}
-
 table {
     /* TODO: maybe extract into a separate file */
     details.dropdown {
         margin: 0;
+    }
+}
+
+a[target=_blank]::after {
+    content: url("mingcute/external_link_line.svg");
+    display: inline-block;
+    scale: 0.7;
+    transform-origin: 0 50%;
+}
+
+.row {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: baseline;
+    gap: 1em;
+
+    > * {
+        margin: 0;
+    }
+
+    > .right {
+        margin-left: auto;
     }
 }

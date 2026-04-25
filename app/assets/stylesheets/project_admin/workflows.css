@@ -1,0 +1,15 @@
+.workflow-statuses-batch-update-fieldsets {
+    display: grid;
+    grid-template-columns: repeat(3, auto) min-content;
+    gap: 0.5em;
+
+    > .fieldset {
+        display: grid;
+        grid-column: 1 / -1;
+        grid-template-columns: subgrid;
+
+        .buttons {
+            align-items: flex-end;
+        }
+    }
+}

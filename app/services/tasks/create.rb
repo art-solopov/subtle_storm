@@ -6,8 +6,9 @@ module Tasks
     attribute :title, :string
     attribute :description, :string
     attribute :status_id, :integer
+    attribute :workflow_id, :integer
 
-    validates :project_id, :title, :status_id, presence: true
+    validates :project_id, :title, :status_id, :workflow_id, presence: true
 
     delegate :model_name, to: Task
 
@@ -18,7 +19,7 @@ module Tasks
     end
 
     def perform
-      @task = project.tasks.build(title:, description:, status_id:, number: @project.next_task_number)
+      @task = project.tasks.build(title:, description:, status_id:, workflow_id:, number: @project.next_task_number)
       save @task
     end
   end

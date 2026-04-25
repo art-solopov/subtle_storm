@@ -1,5 +1,5 @@
-h1
-  span Editing project
-  span= @project.name
+= project_admin_frame(@project) do
+  h2
+    span Editing project
 
-= render 'form'
+  = render 'form'

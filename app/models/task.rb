@@ -3,6 +3,7 @@
 class Task < ApplicationRecord
   belongs_to :project
   belongs_to :status, class_name: 'TaskStatus'
+  belongs_to :workflow
 
   validates :number, :title, presence: true
   validates :number, numericality: { greater_than: 0 }
@@ -33,8 +34,8 @@ class Task < ApplicationRecord
   private
 
   def associations_should_have_same_project
-    return if status&.project == project
+    return if [project, status.project, workflow.project].uniq == [project]
 
-    errors.add(:status, "Doesn't belong in the same project")
+    errors.add(:base, "Project isn't the same across associations")
   end
 end

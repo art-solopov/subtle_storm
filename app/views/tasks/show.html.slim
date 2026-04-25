@@ -3,6 +3,7 @@ div
 h1= @task.title
 
 section.task-show-info
+  = workflow_display @task.workflow, full: true, badge: true
   = task_status_selector @task, with_form: true
   = turbo_stream_from @task, :status, :with_form
 

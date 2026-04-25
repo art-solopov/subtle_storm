@@ -1,0 +1,13 @@
+h1
+  span> Project
+  span= @project.name
+
+- if back_path
+  = link_to '← Back', back_path
+
+= render tabs
+
+= turbo_frame_tag(id) do
+  = content
+  - if turbo_frame_request?
+    = turbo_stream.replace(tabs_id, tabs)

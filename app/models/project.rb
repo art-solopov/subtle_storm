@@ -7,7 +7,8 @@ class Project < ApplicationRecord
   validates :code, exclusion: { in: %w[new] }, uniqueness: true, format: { with: /\A[a-z][a-z0-9]{1,}\z/ }
 
   has_many :tasks, dependent: :restrict_with_exception
-  has_many :task_statuses, dependent: :destroy
+  has_many :workflows, dependent: :destroy
+  has_many :task_statuses, through: :workflows
 
   has_rich_text :description
 

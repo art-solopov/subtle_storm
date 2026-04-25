@@ -16,7 +16,23 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
 
-  resources :projects
+  root to: redirect('/projects')
+
+  resources :projects do
+    namespace :project_admin, as: 'admin' do
+      resources :workflows do
+        scope module: :workflows do
+          resources :statuses, only: %i[index] do
+            get :edit, on: :collection
+            put '/', action: :batch_update, on: :collection
+            get :edit_transitions, on: :collection
+            put '/transitions', action: :batch_update_transitions, on: :collection
+          end
+        end
+      end
+    end
+  end
+
   resources :tasks do
     patch :change_status, on: :member
   end

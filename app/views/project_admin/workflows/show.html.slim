@@ -1,0 +1,13 @@
+h1
+  | Workflow
+
+.row
+  = workflow_display @workflow, full: true, badge: true
+  .links.right
+    = link_to 'Edit', edit_project_admin_workflow_path(@project, @workflow)
+
+h2 Statuses
+
+ul
+  - @workflow.task_statuses.default_order.each do |status|
+    li= task_status_badge(status)

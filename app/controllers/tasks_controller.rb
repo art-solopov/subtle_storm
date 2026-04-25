@@ -3,6 +3,8 @@
 class TasksController < ApplicationController
   before_action :fetch_task, only: %w[show edit update delete change_status]
 
+  helper_method :workflows_for_tasks
+
   def index
     self.current_project = fetch_project
     @tasks = if current_project
@@ -11,18 +13,20 @@ class TasksController < ApplicationController
                Task.all
              end
 
-    @tasks = @tasks.includes(:status, project: :task_statuses)
+    @tasks = @tasks.includes(:project, workflow: %i[task_statuses default_status], status: :next_statuses)
   end
 
   def show; end
 
   def new
-    @project = fetch_project || Project.order(:name).first
-    @form = Tasks::Create.new(project_id: @project.id)
+    @project = self.current_project = fetch_project || Project.order(:name).first
+    @workflow = fetch_workflow || @project.workflows.first
+    @form = Tasks::Create.new(project_id: @project.id, workflow_id: @workflow.id,
+                              status_id: @workflow.default_status&.id)
   end
 
   def create
-    @form = Tasks::Create.new(params.expect(task: %i[project_id title description status_id]))
+    @form = Tasks::Create.new(params.expect(task: %i[project_id title description status_id workflow_id]))
     if @form.perform
       redirect_to tasks_path(project: @form.project)
     else
@@ -70,8 +74,18 @@ class TasksController < ApplicationController
     Project.find_by!(code: params[:project])
   end
 
+  def fetch_workflow
+    return nil if params[:workflow_id].blank?
+
+    @project.workflows.find(params[:workflow_id])
+  end
+
   def fetch_task
     @task = Task.includes(:project).find_by_full_number_or_id!(params[:id])
     self.current_project = @task.project
+  end
+
+  def workflows_for_tasks
+    @project.workflows.joins(:task_statuses).distinct
   end
 end

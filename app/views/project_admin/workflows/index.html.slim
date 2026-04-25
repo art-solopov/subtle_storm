@@ -1,0 +1,13 @@
+= project_admin_frame(@project) do
+  h2
+    span Workflows
+
+  .links
+    = link_to 'New', new_project_admin_workflow_path(@project)
+
+  - @workflows.each do |workflow|
+    article.row
+      = workflow_display(workflow, full: true)
+      ul.links.right
+        li= link_to 'Info', project_admin_workflow_path(@project, workflow), target: '_blank'
+        li= link_to 'Edit', edit_project_admin_workflow_path(@project, workflow), target: '_blank'
