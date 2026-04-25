@@ -1,0 +1,9 @@
+= project_admin_workflow_frame(@workflow) do
+  = form_with model: @workflow, scope: :workflow, url: transitions_project_admin_workflow_statuses_path(@project, @workflow), method: :put, data: {'turbo-frame': '_top'} do |f|
+    = f.fields_for :task_statuses do |tsf|
+      section
+        div= task_status_badge tsf.object
+        div= tsf.collection_checkboxes :next_status_ids, @workflow.task_statuses - [tsf.object], :id, :name
+
+    .submit
+      = f.submit

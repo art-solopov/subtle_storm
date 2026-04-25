@@ -25,6 +25,8 @@ Rails.application.routes.draw do
           resources :statuses, only: %i[index] do
             get :edit, on: :collection
             put '/', action: :batch_update, on: :collection
+            get :edit_transitions, on: :collection
+            put '/transitions', action: :batch_update_transitions, on: :collection
           end
         end
       end
