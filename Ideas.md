@@ -5,11 +5,12 @@
 - User management
     - Passkeys (probably with Warden)
     - An easy way to "impersonate" for an admin
-- Better statuses customization
-    - Custom colors/icons
-    - Status transitions
-        - Ideally status editing *and* transitions editing on the same page — think how it could be achieved without something like Vue
-    - Separate workflows? 
+- ✔️ Better statuses customization
+    - ✔️ Custom colors/icons
+    - ✔️ Status transitions
+        - ✔️ Ideally status editing *and* transitions editing on the same page — think how it could be achieved without something like Vue
+          - (Update) Not on the same page, but using turbo and redirects, wizard-style.
+    - ✔️ Separate workflows? 
 - Audit trail
     - Maybe use a separate database for that?
 - Comments
